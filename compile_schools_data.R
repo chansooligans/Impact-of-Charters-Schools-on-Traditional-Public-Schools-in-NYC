@@ -100,7 +100,10 @@ df = rbind(charter_math %>%
              mutate(charter = 0,
                     math = 0,
                     ela = 1))
-df = df %>% filter(Year == '2015', math == 1)
+
+write.csv(df,'data/all_schools_master.csv',row.names = F)
+
+df2015 = df %>% filter(Year == '2015', math == 1)
 
 ##### Merge Master with Geographic Locations
 ##############################
@@ -127,8 +130,9 @@ locations2015[,c('lat','lon')] = sapply(locations2015[,c('lat','lon')],as.numeri
 
 # Merge to Master on DBN = ATS.SYSTEM.CODE. They are the same.
 locations2015$ATS.SYSTEM.CODE = trimws(locations2015$ATS.SYSTEM.CODE)
-master = df %>% left_join(locations2015,
+master2015 = df2015 %>% left_join(locations2015,
                           by=c('DBN' = 'ATS.SYSTEM.CODE'))
 
-write.csv(master,'data/all_schools_2015.csv',row.names = F)
+write.csv(master2015,'data/all_schools_2015.csv',row.names = F)
+
 

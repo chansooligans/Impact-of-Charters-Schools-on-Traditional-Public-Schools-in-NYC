@@ -1,0 +1,6 @@
+[ERROR] - ESRITranslator - Error [InvalidForOne]: fragment[Fields] clause:  for-one clause: em:fieldDetails (v:Subject, v:Object) <detailed>
+(0) ----------------
+Object => gen:ID0EABA
+(1) ----------------
+Object => gen:ID0EBBA
+

@@ -1,0 +1,12 @@
+[ERROR] - ESRITranslator - Error [InvalidForSome]: <metadata> for-some clause: em:contact(v:Metadata, v:Object) <mdContact>
+
+[ERROR] - ESRITranslator - Error [InvalidForOne]: <metadata> for-one clause: em:dateStamp(v:Metadata, v:Date) <mdDateSt>
+
+[ERROR] - ESRITranslator - Error [InvalidForOne]: fragment[Fields] clause:  for-one clause: em:fieldDetails (v:Subject, v:Object) <detailed>
+(0) ----------------
+Object => gen:ID0EAEA
+(1) ----------------
+Object => gen:ID0ECEA
+(2) ----------------
+Object => gen:ID0EBEA
+
