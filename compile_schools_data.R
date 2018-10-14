@@ -68,7 +68,7 @@ all_ela = all_ela[,-1] # Don't need first column, it's simply cocatenation of se
 
 
 
-##### Master -- ALL GRADES for year 2015
+##### Master 
 ##############################
 
 # Fix NYC DOE Column Names
@@ -81,22 +81,22 @@ colnames(charter_math) = colnames(charter_ela) = colnames(all_math) = colnames(a
 
 # Merge Sheets for "All Grades" in the year 2015 and Math
 df = rbind(charter_math %>% 
-             filter(Grade == 'All Grades') %>% 
+             # filter(Grade == 'All Grades') %>% 
              mutate(charter = 1,
                     math = 1,
                     ela = 0),
            charter_ela %>% 
-             filter(Grade == 'All Grades') %>% 
+             # filter(Grade == 'All Grades') %>% 
              mutate(charter = 1,
                     math = 0,
                     ela = 1),
            all_math %>% 
-             filter(Grade == 'All Grades') %>% 
+             # filter(Grade == 'All Grades') %>% 
              mutate(charter = 0,
                     math = 1,
                     ela = 0),
            all_ela %>% 
-             filter(Grade == 'All Grades') %>% 
+             # filter(Grade == 'All Grades') %>% 
              mutate(charter = 0,
                     math = 0,
                     ela = 1))

@@ -54,10 +54,11 @@ loc_inventory_all = get_location_inventory(master$DBN, locations)
 loc_inventory_all$DBN
 
 master_location_inventory = loc_inventory_all %>% 
-  left_join(master %>% select(DBN,math,ela,charter,Grade,Year), by = 'DBN')
+  left_join(master %>% select(DBN,math,ela,charter,Grade,Year), by = 'DBN') %>%
+  arrange(DBN)
 
 # Export
-write.csv('data/inventory_locations_master.csv', row.names = F)
+write.csv(master_location_inventory,'data/inventory_locations_master.csv', row.names = F)
 
 
 
