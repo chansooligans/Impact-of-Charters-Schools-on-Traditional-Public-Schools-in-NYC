@@ -39,10 +39,12 @@ locations$ATS.SYSTEM.CODE = trimws(locations$ATS.SYSTEM.CODE)
 ##############################
 
 # Join with Master File
-master_loc = locations %>%
-  left_join(master, by = c('ATS.SYSTEM.CODE' = 'DBN', 'FISCAL_YEAR' = 'Year')) %>%
-  dplyr::rename(DBN = ATS.SYSTEM.CODE, Year = FISCAL_YEAR) %>%
+master_loc = master %>%
+  left_join(locations, by = c('DBN' = 'ATS.SYSTEM.CODE', 'Year' = 'FISCAL_YEAR')) %>%
   arrange(DBN)
+
+# Export
+write.csv(master_loc,'data/master_loc.csv', row.names = F)
 
 ##### Create and Export Inventory File 
 ##############################
@@ -57,33 +59,9 @@ inventory = master_loc %>%
 # Export
 write.csv(inventory,'data/inventory_locations_master.csv', row.names = F)
 
-##### Get Longitude / Latitude
-##############################
-
-# "Location.1" column contains Longitude and Latitude
-master_loc$LongLat = gsub("[\\(\\)]", "", regmatches(master_loc$Location.1, gregexpr("\\(.*?\\)", master_loc$Location.1)))
-
-# Schools Missing Long Lat
-missing_long_lat = which(nchar(master_loc$LongLat)<17)
-master_loc[missing_long_lat,]
-
-# Create Lat and Lon Columns
-master_2 = master_loc %>%
-  separate(LongLat, c("lat","lon"), ", ") %>%
-  mutate(lat = as.numeric(lat),
-         lon = as.numeric(lon))
-
-##### Export by Year
-##############################
-
-years = unique(master_2$Year)
-
-export_file = master_2 %>% filter(Year == years[1])
-write.csv(export_file,paste('data/master_',years[i],sep=''), row.names = F)
 
 
-
-
-
-
-
+head(inventory)
+inventory %>%
+  group_by(Year,charter) %>%
+  summarize(count = n_distinct(DBN))

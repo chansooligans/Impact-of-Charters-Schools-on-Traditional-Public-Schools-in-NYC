@@ -4,6 +4,7 @@ library(tidyr)
 library(openxlsx)
 
 # File Locations
+rm(list=ls())
 setwd('/Users/Chansoo/Desktop/Charter_School_Project/')
 nyc_open06_slug = 'data/academic_2006-2012'
 nyc_open13_slug = 'data/academic_2013-2018'
@@ -16,25 +17,19 @@ nyc_doe_slug = 'data/nyc_doe'
 # NYC Open Data 2006-2013
 files_nyc_open06 = list.files(nyc_open06_slug)
 nyc_open06 = list()
-for(i in 1:length(files_nyc_open06)){
-  nyc_open06[[i]] = read.csv(paste(nyc_open06_slug,files_nyc_open06[i],sep='/'))  
-}
+nyc_open06 = lapply(paste(nyc_open06_slug,files_nyc_open06,sep='/'),read.csv)
 names(nyc_open06) = files_nyc_open06
 
 # NYC Open Data 2013-2017
 files_nyc_open13 = list.files(nyc_open13_slug)
 nyc_open13 = list()
-for(i in 1:length(files_nyc_open13)){
-  nyc_open13[[i]] = read.csv(paste(nyc_open13_slug,files_nyc_open13[i],sep='/'))  
-}
+nyc_open13 = lapply(paste(nyc_open13_slug,files_nyc_open13,sep='/'),read.csv)
 names(nyc_open13) = files_nyc_open13
 
 # Locations 2012-2018
 files_locations = list.files(locations_slug)
 locations = list()
-for(i in 1:length(files_locations)){
-  locations[[i]] = read.csv(paste(locations_slug,files_locations[i],sep='/'), stringsAsFactors = F)  
-}
+locations = lapply(paste(locations_slug,files_locations,sep='/'),read.csv)
 names(locations) = files_locations
 
 # NYC DOE Data: Charter Math 2013-2018
