@@ -3,6 +3,7 @@ library(dplyr)
 library(plyr)
 library(tidyr)
 library(openxlsx)
+library(reshape2)
 
 # File Locations
 rm(list=ls())
@@ -44,4 +45,5 @@ for(i in 1:length(years)){
   export_file = elem_math %>% filter(Year == years[i])
   write.csv(export_file,paste('data/merged_scores_and_longlat/elem_math_allgrades_',years[i],'.csv',sep=''), row.names = F)
 }
+
 

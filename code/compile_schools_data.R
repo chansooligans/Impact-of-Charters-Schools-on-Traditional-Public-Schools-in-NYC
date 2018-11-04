@@ -3,6 +3,7 @@ library(dplyr)
 library(plyr)
 library(tidyr)
 library(openxlsx)
+library(reshape2)
 
 # File Locations
 rm(list=ls())
@@ -115,6 +116,8 @@ nyc_doe_columns = c('DBN','School.Name','Grade','Year','Category','Number.Tested
 
 colnames(charter_math) = colnames(charter_ela) = colnames(all_math) = colnames(all_ela) = nyc_doe_columns
 
+df$Mean.Scale.Score = as.numeric(df$Mean.Scale.Score)
+
 # Merge Sheets for "All Grades" in the year 2015 and Math
 df = rbind(charter_math %>% 
              # filter(Grade == 'All Grades') %>% 
@@ -138,17 +141,24 @@ df = rbind(charter_math %>%
                     ela = 1))
 
 ##############################
-##### Add Location
+##### Add Location and selected Demographics (will add race-related variables next)
 ##############################
 
 # Join Location with Master File
 master = df %>%
   left_join(locations, by = c('DBN' = 'ATS.SYSTEM.CODE', 'Year' = 'FISCAL_YEAR'))
 
+# Join Demographics with Master File
+master = master %>%
+  left_join(demographics[,c('DBN','Year','Students.with.Disabilities','English.Language.Learners','Poverty')], by = c('DBN','Year')) %>%
+  mutate(Disabled = as.numeric(Students.with.Disabilities),
+         Ell = as.numeric(English.Language.Learners),
+         Poverty = as.numeric(Poverty)) %>%
+  select(-Students.with.Disabilities,-English.Language.Learners)
+
 ##############################
 ##### Diversity Index 
 ##############################
-
 
 # Shannon Entropy by School
 ##############################
@@ -171,24 +181,62 @@ diversity = cbind(diversity,shannon)
 master = master %>% 
   left_join(diversity, by = c('DBN', 'Year'))
 
-# Shannon Entropy by NTA
+# Shannon Entropy of TPS by NTA
 ##############################
 
 diversity = master %>%
-  select(NTA, Year, Total.Enrollment, Asian, Black, Hispanic, Multiple.Race.Categories.Not.Represented, White)
+  filter(charter == 0) %>%
+  replace(., is.na(.), 0) %>%
+  group_by(NTA,Year) %>%
+  dplyr::summarise(Total.Enrollment = sum(Total.Enrollment),
+         Asian = sum(Asian),
+         Black = sum(Black),
+         Hispanic = sum(Hispanic),
+         Multiple.Race.Categories.Not.Represented = sum(Multiple.Race.Categories.Not.Represented),
+         White = sum(White))
+diversity = as.data.frame(diversity)
 
 # percents
 percents = diversity[,c(4:8)]/ diversity$Total.Enrollment
 
 # shannon entropy 
 shannon_nta = -apply(percents * log(percents+.001),1,sum)
-diversity = cbind(diversity[c('NTA','Year')],shannon_nta)
+diversity = cbind(diversity[,c('NTA','Year')],shannon_nta)
 
 # Merge with Master
 master = master %>% 
   left_join(diversity, by = c('NTA', 'Year'))
 
-colnames(master)
+# Shannon Entropy of TPS by Community District
+##############################
+
+diversity = master %>%
+  filter(charter == 0) %>%
+  replace(., is.na(.), 0) %>%
+  group_by(COMMUNITY_DISTRICT,Year) %>%
+  dplyr::summarise(Total.Enrollment = sum(Total.Enrollment),
+                   Asian = sum(Asian),
+                   Black = sum(Black),
+                   Hispanic = sum(Hispanic),
+                   Multiple.Race.Categories.Not.Represented = sum(Multiple.Race.Categories.Not.Represented),
+                   White = sum(White))
+diversity = as.data.frame(diversity)
+
+# percents
+percents = diversity[,c(4:8)]/ diversity$Total.Enrollment
+
+# shannon entropy 
+shannon_cd = -apply(percents * log(percents+.001),1,sum)
+diversity = cbind(diversity[,c('COMMUNITY_DISTRICT','Year')],shannon_cd)
+
+# Merge with Master
+master = master %>% 
+  left_join(diversity, by = c('COMMUNITY_DISTRICT', 'Year'))
+
+
+##############################
+##### Export
+##############################
 
 # Export
 write.csv(master,'data/master.csv', row.names = F)
