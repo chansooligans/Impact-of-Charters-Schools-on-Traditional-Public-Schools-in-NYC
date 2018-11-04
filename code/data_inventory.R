@@ -15,7 +15,7 @@ qgis_slug = 'data/qgis_exports/'
 
 # Data Exported from 'compile_schools_data.R'
 ##############################
-master_loc = read.csv('data/master_loc.csv', stringsAsFactors = F)
+master = read.csv('data/master.csv', stringsAsFactors = F)
 
 # Data Exported from QGIS (schools merged with zones)
 ##############################
@@ -37,7 +37,7 @@ qgis_df = qgis_df[qgis_df$math==1,cols_to_keep]
 # Inventory by NTA
 ##############################
 
-nta = master_loc %>%
+nta = master %>%
   filter(Grade == '4', math == 1) %>%
   group_by(Year, NTA) %>%
   dplyr::summarize(charter = sum(charter),
@@ -49,7 +49,7 @@ nta.total.inv = dcast(nta, NTA ~ Year, value.var = c('total'))
 # Inventory by Community District
 ##############################
 
-com_dist = master_loc %>%
+com_dist = master %>%
   filter(Grade == '4', math == 1) %>%
   group_by(Year, COMMUNITY_DISTRICT) %>%
   dplyr::summarize(charter = sum(charter),
@@ -61,7 +61,7 @@ com_dist.total.inv = dcast(com_dist, COMMUNITY_DISTRICT ~ Year, value.var = c('t
 # Inventory by Community District
 ##############################
 
-c_tract = master_loc %>%
+c_tract = master %>%
   filter(Grade == '4', math == 1) %>%
   group_by(Year, CENSUS_TRACT) %>%
   dplyr::summarize(charter = sum(charter),
@@ -80,8 +80,6 @@ qgis = qgis_df %>%
 
 qgis.charter.inv = dcast(qgis, esid_no ~ Year, value.var = c('charter'))
 qgis.total.inv = dcast(qgis, esid_no ~ Year, value.var = c('total'))
-
-
 
 
 # Export

@@ -85,6 +85,23 @@ locations = rbind.fill(locations)
 # Fix DBN Column
 locations$ATS.SYSTEM.CODE = trimws(locations$ATS.SYSTEM.CODE)
 
+# Demographics 2013-2018 (NYC OPEN DATA)
+##############################
+
+demographics = read.csv('data/demographics/2013_-_2018_Demographic_Snapshot_School.csv', stringsAsFactors = F)
+
+# Fix Column Names
+colnames_to_fix = colnames(demographics)[19:38]
+colnames_to_fix = substr(colnames_to_fix,4,nchar(colnames_to_fix))
+colnames_to_fix = gsub(".1",'Percent',colnames_to_fix)
+colnames(demographics)[19:38] = colnames_to_fix
+
+# Fix Year Column
+demographics$Year = as.integer(paste('20',substr(demographics$Year,6,7),sep=''))
+
+
+
+
 ##############################
 ##### Master: Aggregate NYC DOE Test Scores from NYC DOE Data
 ##############################
@@ -120,15 +137,43 @@ df = rbind(charter_math %>%
                     ela = 1))
 
 ##############################
-##### Join Location with Master
+##### Add Location and Demographics
 ##############################
 
-# Join with Master File
-master_loc = df %>%
-  left_join(locations, by = c('DBN' = 'ATS.SYSTEM.CODE', 'Year' = 'FISCAL_YEAR')) %>%
-  arrange(DBN)
+# Join Location with Master File
+master = df %>%
+  left_join(locations, by = c('DBN' = 'ATS.SYSTEM.CODE', 'Year' = 'FISCAL_YEAR'))
+
+# Join Demographics with Master File
+master = master %>%
+  left_join(demographics %>% select(-School.Name), by = c('DBN'='DBN', 'Year' = 'Year'))
+
+
+##############################
+##### Diversity Index
+##############################
+
+head(diversity,20)
+diversity = master %>%
+  filter(Grade == 'All Grades', math == 1) %>%
+  select(DBN, Year, Total.Enrollment, Asian, Black, Hispanic, Multiple.Race.Categories.Not.Represented, White)
+
+for(i in 3:8){
+  diversity[,i] = as.numeric(gsub(',','',diversity[,i]))
+}
+
+# percents
+percents = diversity[,c(4:8)]/ diversity$Total.Enrollment
+
+# shannon entropy 
+shannon = -apply(percents * log(percents+.001),1,sum)
+diversity = cbind(diversity,shannon)
+
+# Merge with Master
+master = master %>% 
+  left_join(diversity, by = c('DBN', 'Year'))
 
 # Export
-write.csv(master_loc,'data/master_loc.csv', row.names = F)
+write.csv(master,'data/master.csv', row.names = F)
 
 
