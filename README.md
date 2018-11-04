@@ -25,3 +25,17 @@ Collaborative Project by Chansoo Song, Erik Wang, Frankie Wunschel
 - imports data from QGIS (QGIS is used to merge CSV files exported from 'export.R' with school zones). there will be a separate file for each year
 - merge the data files into one master dataframe
 - reshape to conduct inventory check (whether we have zones or not)
+
+## Data
+
+#### Test Scores:
+- Test scores for year ending 2014 to 2018 from NYC: https://infohub.nyced.org/reports-and-policies/citywide-information-and-data/information-and-data-overview
+- Test scores for 2006-2012: NYC Open Data
+
+#### Demographics:
+- Received from Ying (NYC Open Data)
+
+#### Locations:
+- NYC Open Data (shapefiles from year ending 2013-2018)
+
+
