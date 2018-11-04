@@ -7,24 +7,21 @@ Collaborative Project by Chansoo Song, Erik Wang, Frankie Wunschel
 ## Code
 
 (1) "compile_schools_data.R" 
-- merges data from NYC DOE (https://infohub.nyced.org/reports-and-policies/citywide-information-and-data/information-and-data-overview). 
+- imports data from NYC DOE (https://infohub.nyced.org/reports-and-policies/citywide-information-and-data/information-and-data-overview), separate files for each AY
+- imports data from QGIS (QGIS is used to merge CSV files exported from 'export.R' with school zones). separate files for each AY
+- import location files. separate files for each AY
+- import demographics files. separate files for each AY
+- compute diversity index using Shannon Entropy (with demographics data)
+- merge all files together
 - exports a master dataset called "all_schools_master.csv", which contains DBN, scores by grade, and indicators for math/ela and charter
 
 (2) "data_inventory.R":
-- loads the master dataset then merges with location files
-- exports an updated master file that includes location
-- groups data by school and adds indicator columns for each year, showing whether location is available for that school and year.
+- Define "region" as NTA, Community District, Census Tract, Elementary School Zone ID
+- groups data by region. separate columns for each year indicate the # of charters/public schools contained in the region for that year
 
 (3) "export.R": 
 - creates longitude and latitude columns
-- merges with demographics files
-- computes diversity index
 - exports files that can be imported into QGIS (e.g. separate CSV files containing elementary schools for each year)
-
-(4) "schools_and_zones_merged.R":
-- imports data from QGIS (QGIS is used to merge CSV files exported from 'export.R' with school zones). there will be a separate file for each year
-- merge the data files into one master dataframe
-- reshape to conduct inventory check (whether we have zones or not)
 
 ## Data
 
