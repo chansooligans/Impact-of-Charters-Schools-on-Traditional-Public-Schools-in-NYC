@@ -1,5 +1,6 @@
 # Dependencies
 library(dplyr)
+library(plyr)
 library(tidyr)
 library(openxlsx)
 
@@ -145,14 +146,12 @@ master = df %>%
   left_join(locations, by = c('DBN' = 'ATS.SYSTEM.CODE', 'Year' = 'FISCAL_YEAR'))
 
 ##############################
-##### Diversity Index
+##### Diversity Index 
 ##############################
 
-# Join Demographics with Master File
-# master = master %>%
-#   left_join(demographics %>% select(-School.Name), by = c('DBN'='DBN', 'Year' = 'Year'))
-# 
-# colnames(demographics)
+
+# Shannon Entropy by School
+##############################
 
 diversity = demographics %>%
   select(DBN, Year, Total.Enrollment, Asian, Black, Hispanic, Multiple.Race.Categories.Not.Represented, White)
@@ -171,6 +170,25 @@ diversity = cbind(diversity,shannon)
 # Merge with Master
 master = master %>% 
   left_join(diversity, by = c('DBN', 'Year'))
+
+# Shannon Entropy by NTA
+##############################
+
+diversity = master %>%
+  select(NTA, Year, Total.Enrollment, Asian, Black, Hispanic, Multiple.Race.Categories.Not.Represented, White)
+
+# percents
+percents = diversity[,c(4:8)]/ diversity$Total.Enrollment
+
+# shannon entropy 
+shannon_nta = -apply(percents * log(percents+.001),1,sum)
+diversity = cbind(diversity[c('NTA','Year')],shannon_nta)
+
+# Merge with Master
+master = master %>% 
+  left_join(diversity, by = c('NTA', 'Year'))
+
+colnames(master)
 
 # Export
 write.csv(master,'data/master.csv', row.names = F)

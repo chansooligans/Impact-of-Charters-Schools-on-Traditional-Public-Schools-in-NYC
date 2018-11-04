@@ -1,6 +1,6 @@
 # Dependencies
-library(plyr)
 library(dplyr)
+library(plyr)
 library(tidyr)
 library(openxlsx)
 
