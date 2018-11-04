@@ -7,52 +7,35 @@ library(openxlsx)
 # File Locations
 rm(list=ls())
 setwd('/Users/Chansoo/Desktop/Charter_School_Project/')
-locations_slug = 'data/locations'
+qgis_slug = 'data/qgis_exports/'
 
+##############################
 ##### Read Data
 ##############################
-master = read.csv('data/all_schools_master.csv', stringsAsFactors = F)
 
-# Locations 2012-2018
-files_locations = list.files(locations_slug)
-
-locations = list()
-locations = lapply(paste(locations_slug,files_locations,sep='/'), read.csv, stringsAsFactors = F)
-
-colnames(locations[[1]])
-loc_cols_to_keep = c('FISCAL_YEAR',
-                     'ATS.SYSTEM.CODE',
-                     'COMMUNITY_DISTRICT',
-                     'COUNCIL_DISTRICT',
-                     'NTA',
-                     'NTA_NAME',
-                     'CENSUS_TRACT',
-                     'Location.1')
-
-# Subset each data frame in list to the columns listed above
-locations = lapply(locations, function(x) x[,loc_cols_to_keep]) 
-# Then combine list of data frames into single dataframe
-locations = rbind.fill(locations)
-# Fix DBN Column
-locations$ATS.SYSTEM.CODE = trimws(locations$ATS.SYSTEM.CODE)
-
-
-##### Join with Master
+# Data Exported from 'compile_schools_data.R'
 ##############################
+master_loc = read.csv('data/master_loc.csv', stringsAsFactors = F)
 
-# Join with Master File
-master_loc = master %>%
-  left_join(locations, by = c('DBN' = 'ATS.SYSTEM.CODE', 'Year' = 'FISCAL_YEAR')) %>%
-  arrange(DBN)
+# Data Exported from QGIS (schools merged with zones)
+##############################
+qgis_exports = list.files(qgis_slug)
+qgis_list = list()
+qgis_list = lapply(paste(qgis_slug,qgis_exports,sep='/'), read.csv, stringsAsFactors = F)
 
-# Export
-write.csv(master_loc,'data/master_loc.csv', row.names = F)
+# Then combine list of data frames into single dataframe
+qgis_df = rbind.fill(qgis_list)
+cols_to_keep = c('DBN','esid_no','Year','charter','math','ela','CENSUS_TRACT','lat','lon','shannon')
 
+# Subset Dataframe
+qgis_df = qgis_df[qgis_df$math==1,cols_to_keep]
+
+##############################
 ##### Create and Export Inventory File 
 ##############################
 
 # Inventory by NTA
-colnames(master_loc)
+##############################
 
 nta = master_loc %>%
   filter(Grade == '4', math == 1) %>%
@@ -61,10 +44,52 @@ nta = master_loc %>%
                    total = n())
 
 nta.charter.inv = dcast(nta, NTA ~ Year, value.var = c('charter'))
-nta.tps.inv = dcast(nta, NTA ~ Year, value.var = c('total'))
+nta.total.inv = dcast(nta, NTA ~ Year, value.var = c('total'))
 
-apply(nta.tps.inv[,-1],2,sum)
+# Inventory by Community District
+##############################
+
+com_dist = master_loc %>%
+  filter(Grade == '4', math == 1) %>%
+  group_by(Year, COMMUNITY_DISTRICT) %>%
+  dplyr::summarize(charter = sum(charter),
+                   total = n())
+
+com_dist.charter.inv = dcast(com_dist, COMMUNITY_DISTRICT ~ Year, value.var = c('charter'))
+com_dist.total.inv = dcast(com_dist, COMMUNITY_DISTRICT ~ Year, value.var = c('total'))
+
+# Inventory by Community District
+##############################
+
+c_tract = master_loc %>%
+  filter(Grade == '4', math == 1) %>%
+  group_by(Year, CENSUS_TRACT) %>%
+  dplyr::summarize(charter = sum(charter),
+                   total = n())
+
+c_tract.charter.inv = dcast(c_tract, CENSUS_TRACT ~ Year, value.var = c('charter'))
+c_tract.total.inv = dcast(c_tract, CENSUS_TRACT ~ Year, value.var = c('total'))
+
+# Inventory by QGIS: Elementary School Zone
+##############################
+
+qgis = qgis_df %>%
+  group_by(Year, esid_no) %>%
+  dplyr::summarize(charter = sum(charter),
+                   total = n())
+
+qgis.charter.inv = dcast(qgis, esid_no ~ Year, value.var = c('charter'))
+qgis.total.inv = dcast(qgis, esid_no ~ Year, value.var = c('total'))
+
+
 
 
 # Export
-write.csv(inventory,'data/inventory_locations_master.csv', row.names = F)
+write.csv(nta.charter.inv,'data/data_inventory/nta.charter.inv.csv', row.names = F)
+write.csv(nta.total.inv,'data/data_inventory/nta.total.inv.csv', row.names = F)
+write.csv(com_dist.charter.inv,'data/data_inventory/com_dist.charter.inv.csv', row.names = F)
+write.csv(com_dist.total.inv,'data/data_inventory/com_dist.total.inv.csv', row.names = F)
+write.csv(c_tract.charter.inv,'data/data_inventory/c_tract.charter.inv.csv', row.names = F)
+write.csv(c_tract.total.inv,'data/data_inventory/c_tract.total.inv.csv', row.names = F)
+write.csv(qgis.charter.inv,'data/data_inventory/qgis.charter.inv.csv', row.names = F)
+write.csv(qgis.total.inv,'data/data_inventory/qgis.total.inv.csv', row.names = F)

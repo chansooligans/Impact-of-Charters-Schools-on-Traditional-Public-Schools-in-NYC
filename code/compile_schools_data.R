@@ -9,8 +9,13 @@ setwd('/Users/Chansoo/Desktop/Charter_School_Project/')
 nyc_open06_slug = 'data/academic_2006-2012'
 nyc_open13_slug = 'data/academic_2013-2018'
 nyc_doe_slug = 'data/nyc_doe'
+locations_slug = 'data/locations'
 
+##############################
 # Load Data
+##############################
+
+# NYC TEST SCORES FROM OPEN DATA
 ##############################
 
 # NYC Open Data 2006-2013
@@ -24,6 +29,9 @@ files_nyc_open13 = list.files(nyc_open13_slug)
 nyc_open13 = list()
 nyc_open13 = lapply(paste(nyc_open13_slug,files_nyc_open13,sep='/'),read.csv)
 names(nyc_open13) = files_nyc_open13
+
+# NYC TEST SCORES FROM NYC DOE (2013-2018)
+##############################
 
 # NYC DOE Data: Charter Math 2013-2018
 files_nyc_doe = list.files(nyc_doe_slug)
@@ -54,9 +62,31 @@ all_ela = read.xlsx(paste(nyc_doe_slug,files_nyc_doe[9],sep='/'),
                    colNames = TRUE)
 all_ela = all_ela[,-1] # Don't need first column, it's simply cocatenation of several other columns existing in dataset
 
+# Locations 2012-2018 (NYC OPEN DATA)
+##############################
 
+files_locations = list.files(locations_slug)
+locations = list()
+locations = lapply(paste(locations_slug,files_locations,sep='/'), read.csv, stringsAsFactors = F)
 
-##### Master 
+loc_cols_to_keep = c('FISCAL_YEAR',
+                     'ATS.SYSTEM.CODE',
+                     'COMMUNITY_DISTRICT',
+                     'COUNCIL_DISTRICT',
+                     'NTA',
+                     'NTA_NAME',
+                     'CENSUS_TRACT',
+                     'Location.1')
+
+# Subset each data frame in list to the columns listed above
+locations = lapply(locations, function(x) x[,loc_cols_to_keep]) 
+# Then combine list of data frames into single dataframe
+locations = rbind.fill(locations)
+# Fix DBN Column
+locations$ATS.SYSTEM.CODE = trimws(locations$ATS.SYSTEM.CODE)
+
+##############################
+##### Master: Aggregate NYC DOE Test Scores from NYC DOE Data
 ##############################
 
 # Fix NYC DOE Column Names
@@ -89,6 +119,16 @@ df = rbind(charter_math %>%
                     math = 0,
                     ela = 1))
 
-write.csv(df,'data/all_schools_master.csv',row.names = F)
+##############################
+##### Join Location with Master
+##############################
 
-df2015 = df %>% filter(Year == '2015', math == 1)
+# Join with Master File
+master_loc = df %>%
+  left_join(locations, by = c('DBN' = 'ATS.SYSTEM.CODE', 'Year' = 'FISCAL_YEAR')) %>%
+  arrange(DBN)
+
+# Export
+write.csv(master_loc,'data/master_loc.csv', row.names = F)
+
+
