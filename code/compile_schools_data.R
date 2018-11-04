@@ -137,24 +137,24 @@ df = rbind(charter_math %>%
                     ela = 1))
 
 ##############################
-##### Add Location and Demographics
+##### Add Location
 ##############################
 
 # Join Location with Master File
 master = df %>%
   left_join(locations, by = c('DBN' = 'ATS.SYSTEM.CODE', 'Year' = 'FISCAL_YEAR'))
 
-# Join Demographics with Master File
-master = master %>%
-  left_join(demographics %>% select(-School.Name), by = c('DBN'='DBN', 'Year' = 'Year'))
-
-
 ##############################
 ##### Diversity Index
 ##############################
 
-diversity = master %>%
-  filter(Grade == 'All Grades', math == 1) %>%
+# Join Demographics with Master File
+# master = master %>%
+#   left_join(demographics %>% select(-School.Name), by = c('DBN'='DBN', 'Year' = 'Year'))
+# 
+# colnames(demographics)
+
+diversity = demographics %>%
   select(DBN, Year, Total.Enrollment, Asian, Black, Hispanic, Multiple.Race.Categories.Not.Represented, White)
 
 for(i in 3:8){
@@ -166,7 +166,7 @@ percents = diversity[,c(4:8)]/ diversity$Total.Enrollment
 
 # shannon entropy 
 shannon = -apply(percents * log(percents+.001),1,sum)
-diversity = cbind(diversity[,c('DBN','Year')],shannon)
+diversity = cbind(diversity,shannon)
 
 # Merge with Master
 master = master %>% 
