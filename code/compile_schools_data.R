@@ -153,7 +153,6 @@ master = master %>%
 ##### Diversity Index
 ##############################
 
-head(diversity,20)
 diversity = master %>%
   filter(Grade == 'All Grades', math == 1) %>%
   select(DBN, Year, Total.Enrollment, Asian, Black, Hispanic, Multiple.Race.Categories.Not.Represented, White)
@@ -167,7 +166,7 @@ percents = diversity[,c(4:8)]/ diversity$Total.Enrollment
 
 # shannon entropy 
 shannon = -apply(percents * log(percents+.001),1,sum)
-diversity = cbind(diversity,shannon)
+diversity = cbind(diversity[,c('DBN','Year')],shannon)
 
 # Merge with Master
 master = master %>% 
@@ -175,5 +174,6 @@ master = master %>%
 
 # Export
 write.csv(master,'data/master.csv', row.names = F)
+
 
 

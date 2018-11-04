@@ -47,5 +47,7 @@ Collaborative Project by Chansoo Song, Erik Wang, Frankie Wunschel
 - e.g. link for AY 2017-2018: https://data.cityofnewyork.us/Education/2017-2018-School-Zones/ghq4-ydq4
 - Each year contains separate shapefiles for Elementary School Zones, Middle School Zones, High School Zones.
 - esid, msid, hsid each indicate id of the zones
+- NTA Shapefile: https://data.cityofnewyork.us/City-Government/Neighborhood-Tabulation-Areas/cpf4-rkhq
+- Community Districts Shapefile: https://data.cityofnewyork.us/City-Government/Community-Districts/yfnk-k7r4
 
 

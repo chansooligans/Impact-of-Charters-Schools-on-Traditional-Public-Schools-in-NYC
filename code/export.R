@@ -33,11 +33,8 @@ master = master %>% filter(abs(lon) > 0) #filter out schools missing long/lat
 ##### Elementary Schools (MATH) (Schools with Grade = 4), Year > 2013
 ##############################
 
-
-
 elem_math = master %>% 
-  filter(DBN %in% elem$DBN, 
-         Grade == '4', 
+  filter(Grade == '4', 
          math == 1, 
          Year>2013)
 
