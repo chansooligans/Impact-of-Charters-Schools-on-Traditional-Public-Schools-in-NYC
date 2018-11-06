@@ -52,12 +52,12 @@ nta.total.inv = dcast(nta, NTA ~ Year, value.var = c('total'))
 
 com_dist = master %>%
   filter(Grade == '4', math == 1) %>%
-  group_by(Year, COMMUNITY_DISTRICT) %>%
+  group_by(Year, GEOGRAPHICAL_DISTRICT_CODE) %>%
   dplyr::summarize(charter = sum(charter),
                    total = n())
 
-com_dist.charter.inv = dcast(com_dist, COMMUNITY_DISTRICT ~ Year, value.var = c('charter'))
-com_dist.total.inv = dcast(com_dist, COMMUNITY_DISTRICT ~ Year, value.var = c('total'))
+com_dist.charter.inv = dcast(com_dist, GEOGRAPHICAL_DISTRICT_CODE ~ Year, value.var = c('charter'))
+com_dist.total.inv = dcast(com_dist, GEOGRAPHICAL_DISTRICT_CODE ~ Year, value.var = c('total'))
 
 # Inventory by Community District
 ##############################
