@@ -73,8 +73,7 @@ locations = lapply(paste(locations_slug,files_locations,sep='/'), read.csv, stri
 
 loc_cols_to_keep = c('FISCAL_YEAR',
                      'ATS.SYSTEM.CODE',
-                     'COMMUNITY_DISTRICT',
-                     'COUNCIL_DISTRICT',
+                     'GEOGRAPHICAL_DISTRICT_CODE',
                      'NTA',
                      'NTA_NAME',
                      'CENSUS_TRACT',
@@ -116,8 +115,6 @@ nyc_doe_columns = c('DBN','School.Name','Grade','Year','Category','Number.Tested
 
 colnames(charter_math) = colnames(charter_ela) = colnames(all_math) = colnames(all_ela) = nyc_doe_columns
 
-df$Mean.Scale.Score = as.numeric(df$Mean.Scale.Score)
-
 # Merge Sheets for "All Grades" in the year 2015 and Math
 df = rbind(charter_math %>% 
              # filter(Grade == 'All Grades') %>% 
@@ -140,6 +137,12 @@ df = rbind(charter_math %>%
                     math = 0,
                     ela = 1))
 
+df$Mean.Scale.Score = as.numeric(df$Mean.Scale.Score)
+
+# Remove Missing Scores ## !!!!!!!!!!!!!!!!!!!!
+df = df[which(!is.na(df$Mean.Scale.Score)),]
+
+
 ##############################
 ##### Add Location and selected Demographics (will add race-related variables next)
 ##############################
@@ -155,6 +158,7 @@ master = master %>%
          Ell = as.numeric(English.Language.Learners),
          Poverty = as.numeric(Poverty)) %>%
   select(-Students.with.Disabilities,-English.Language.Learners)
+
 
 ##############################
 ##### Diversity Index 
@@ -207,13 +211,13 @@ diversity = cbind(diversity[,c('NTA','Year')],shannon_nta)
 master = master %>% 
   left_join(diversity, by = c('NTA', 'Year'))
 
-# Shannon Entropy of TPS by Community District
+# Shannon Entropy of TPS by Community School District
 ##############################
 
 diversity = master %>%
   filter(charter == 0) %>%
   replace(., is.na(.), 0) %>%
-  group_by(COMMUNITY_DISTRICT,Year) %>%
+  group_by(GEOGRAPHICAL_DISTRICT_CODE,Year) %>%
   dplyr::summarise(Total.Enrollment = sum(Total.Enrollment),
                    Asian = sum(Asian),
                    Black = sum(Black),
@@ -227,11 +231,11 @@ percents = diversity[,c(4:8)]/ diversity$Total.Enrollment
 
 # shannon entropy 
 shannon_cd = -apply(percents * log(percents+.001),1,sum)
-diversity = cbind(diversity[,c('COMMUNITY_DISTRICT','Year')],shannon_cd)
+diversity = cbind(diversity[,c('GEOGRAPHICAL_DISTRICT_CODE','Year')],shannon_cd)
 
 # Merge with Master
 master = master %>% 
-  left_join(diversity, by = c('COMMUNITY_DISTRICT', 'Year'))
+  left_join(diversity, by = c('GEOGRAPHICAL_DISTRICT_CODE', 'Year'))
 
 
 ##############################
