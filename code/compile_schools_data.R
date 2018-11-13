@@ -157,7 +157,7 @@ master = master %>%
   mutate(Disabled = as.numeric(Students.with.Disabilities),
          Ell = as.numeric(English.Language.Learners),
          Poverty = as.numeric(Poverty)) %>%
-  select(-Students.with.Disabilities,-English.Language.Learners)
+  dplyr::select(-Students.with.Disabilities,-English.Language.Learners)
 
 
 ##############################
@@ -168,7 +168,7 @@ master = master %>%
 ##############################
 
 diversity = demographics %>%
-  select(DBN, Year, Total.Enrollment, Asian, Black, Hispanic, Multiple.Race.Categories.Not.Represented, White)
+  dplyr::select(DBN, Year, Total.Enrollment, Asian, Black, Hispanic, Multiple.Race.Categories.Not.Represented, White)
 
 for(i in 3:8){
   diversity[,i] = as.numeric(gsub(',','',diversity[,i]))

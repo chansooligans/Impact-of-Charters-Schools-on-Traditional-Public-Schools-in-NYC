@@ -1,0 +1,103 @@
+---
+title: "Meeting Notes 11/12"
+author: "Chansoo Song"
+date: "11/12/2018"
+output: pdf_document
+---
+
+```{r setup, include=FALSE,warning=FALSE,message=FALSE}
+library(plyr)
+library(dplyr)
+library(lme4)
+```
+
+```{r}
+# Read Data
+df = read.csv('../data/master.csv')
+
+# Data Exported from QGIS (schools merged with zones)
+##############################
+qgis_exports = list.files('../data/qgis_exports/')
+qgis_list = list()
+qgis_list = lapply(paste('../data/qgis_exports/',qgis_exports,sep='/'), 
+                   read.csv, stringsAsFactors = F)
+
+# Then combine list of data frames into single dataframe
+qgis_df = rbind.fill(qgis_list)
+cols_to_keep = c('DBN','esid_no','Year')
+
+# Subset Dataframe
+qgis_df = qgis_df[qgis_df$math==1,cols_to_keep]
+
+# Filter / Subset Dataset
+##############################
+master = df %>% 
+  filter(math == 1,
+         Grade == 4) %>%
+  mutate(year_sch = paste(DBN,Year,sep='_'))
+
+master = master %>% 
+  left_join(qgis_df, by=c('DBN','Year'))
+
+# Standardize Scores for Math / All Grades
+mean_scores_year = tapply(master$Mean.Scale.Score,master$Year,mean)
+sd_year = tapply(master$Mean.Scale.Score,master$Year,sd)
+years = names(mean_scores_year)
+
+for(i in 1:length(years)){
+  master$Mean.Scale.Score[master$Year==years[i]] = 
+    (master$Mean.Scale.Score[master$Year==years[i]] - mean_scores_year[i]) / sd_year[i]  
+}
+```
+
+```{r}
+##############################
+# Model
+##############################
+
+# Charter Count
+temp = master %>%
+  group_by(GEOGRAPHICAL_DISTRICT_CODE, Year) %>%
+  dplyr::summarize(charter_count = sum(charter))
+
+master2 = master %>% 
+  filter(charter == 0) %>%
+  left_join(temp, by=c('Year','GEOGRAPHICAL_DISTRICT_CODE'))
+
+pooled.1 = lm(Mean.Scale.Score ~ charter_count, data = master2)
+
+mm.mod1 = lmer(Mean.Scale.Score ~ (1 | GEOGRAPHICAL_DISTRICT_CODE), 
+               data = master2)
+mm.mod2 = lmer(Mean.Scale.Score ~ (1 | DBN), 
+               data = master2)
+mm.mod3 = lmer(Mean.Scale.Score ~ (1 | esid_no), 
+               data = master2)
+mm.mod4 = lmer(Mean.Scale.Score ~ (1 | GEOGRAPHICAL_DISTRICT_CODE/DBN), 
+               data = master2)
+mm.mod5 = lmer(Mean.Scale.Score ~ charter_count + (1 | GEOGRAPHICAL_DISTRICT_CODE), 
+               data = master2)
+mm.mod6 = lmer(Mean.Scale.Score ~ charter_count + (1 | DBN), 
+               data = master2)
+mm.mod7 = lmer(Mean.Scale.Score ~ charter_count + (1 | esid_no), 
+               data = master2)
+mm.mod8 = lmer(Mean.Scale.Score ~ charter_count + (1 | GEOGRAPHICAL_DISTRICT_CODE/esid_no/DBN), 
+               data = master2)
+mm.mod9 = lmer(Mean.Scale.Score ~ charter_count + Poverty + Disabled + Ell + Asian + 
+                 Black + Hispanic + (1 | GEOGRAPHICAL_DISTRICT_CODE/esid_no/DBN), 
+               data = master2)
+mm.mod10 = lmer(Mean.Scale.Score ~ charter_count + Poverty + Disabled + Ell + Asian + Black + 
+                  Hispanic + (1 | GEOGRAPHICAL_DISTRICT_CODE) + (charter_count | esid_no/DBN), 
+                data = master2)
+
+summary(pooled.1)
+summary(mm.mod1)
+summary(mm.mod2)
+summary(mm.mod3)
+summary(mm.mod4)
+summary(mm.mod5)
+summary(mm.mod6)
+summary(mm.mod7)
+summary(mm.mod8)
+summary(mm.mod9)
+summary(mm.mod10)
+```
