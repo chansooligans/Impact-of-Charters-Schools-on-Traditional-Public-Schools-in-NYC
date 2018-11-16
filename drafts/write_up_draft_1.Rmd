@@ -1,0 +1,66 @@
+---
+title: "Consulting Project Write_Up"
+author: "Chansoo Song"
+date: "11/16/2018"
+output: pdf_document
+header-includes:
+  - \setlength{\parindent}{4em}
+  - \setlength{\parskip}{1em}
+---
+
+\fontsize{12}{22}
+\selectfont
+
+```{r rmtreatsetup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE)
+knitr::opts_chunk$set(include=TRUE)
+knitr::opts_chunk$set(tidy.opts=list(width.cutoff=60), tidy=TRUE)
+knitr::opts_knit$set(root.dir='.')
+```
+
+```{r rmd, message=FALSE,include=FALSE,warning=FALSE}
+set.seed(1234)
+```
+
+## Introduction:
+
+The purpose of this project is to evaluate whether the # of charter schools neighboring traditional public schools have some [relationship] with test score outcomes of the neighboring traditional public schools. (And whether this [relationship] varies with the proximity of the charter schools to the traditional public schools.)
+
+A charter school in New York City is a public school open to all New York Students. However, they operate independently: they have unique educational approaches that may include longer school days, a longer school year, or themed programs. A key motivation to provide charter schools is for the New York City Department of Education to offer alternative approaches to schooling for students. Charter schools have a wide range of academic and staffing models, mission, goals, and policies.
+
+There exists ample literature showing higher performance of average students’ test scores when they attend a charter compared to the score they would have received had they attended a traditional public school instead. For example, the Stanford's Center for Research on Education Outcomes (CREDO) and the Manhattan Institute find that charter schools on average have a positive effect on students. CREDO uses the Virtual Control Record (VCR) methodology, which matches charter school students with traditional public school students. That is, a VCR is a synthesis of the actual academic experiences of students who are identical to charter school students, except that VCR students attend a TPS that each charter school’s students would have attended if not enrolled in their charter school. Using this design, CREDO finds that compared to educational gains that charter schools might have had in a traditional public school, charter school students in NYC show stronger growth in both reading and math. The Manhattan Institute reviews several studies that use both randomized field trial designs and matching (including the CREDO report) and find that students who attend a NYC charter instead of traditional public school do much better on math tests and, to a lesser degree, ELA tests. 
+
+The research on the impact of charter schools on neighboring traditional public schools, however, is less certain. One positive effect is that charter schools provide parents with alternatives to traditional public schools. Proponents of the charter school movement (such as the Manhattan Institute's report) further suggest that competition from New York City charter schools has either no effect, or a positive effect on the performance of students in the nearby traditional public schools. That is, as a consequence of offering students and parents with more choices, traditional public schools improve in order to compete and to retain students. On the other hand, charter schools can divert funding, resources (e.g. teachers), and motivated students away from traditional public schools.
+
+## Literature:
+
+There are two main studies evaluating whether competition from New York City charter schools harm or help traditional public schools: Winters (2014) and Cordes (2017). Both studies use student level data and evaluate effects between 2009 and 2011. Winters finds that when schools lose students to charter schools, there is a trivially small impact on traditional public school students' test scores in the following year. Cordes (2017) finds that charter schools significantly increase traditional public school students' scores in both ELA and math. Further Cordes finds that these effects are amplified with charter school proximity.  
+
+Booker, Gilpatric, Gronberg, Jansen (2007) use an eight-year panel of data on individual student test scores for public schools student in Texas to estimate a positive and significant effect of charter school penetration on traditional public school outcomes in Texas. Bifulco and Reback (2011) find that charter schools have had negative fiscal impacts on two school districts in New York: Albany and Buffalo, for the two following reasons: (1) operating two systems of public schools under separate governance arrangements can create excess costs and (2) charter school financing policies can distribute resources to or away from districts. Ladd and Singleton (2018) build on Bifulco and Reback's approach and find a large and negative fiscal impact in North Carolina of charter schools on traditional public schools that share the same district. 
+
+## Data:
+
+## Model:
+
+## Results:
+
+## Analysis:
+
+## Conclusion and Limitations: 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

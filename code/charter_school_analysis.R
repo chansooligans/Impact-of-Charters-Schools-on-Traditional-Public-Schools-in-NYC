@@ -46,7 +46,7 @@ for(i in 1:length(grade_years)){
 }
 
 
-# Charter Count
+# Charter Count (Zone)
 #########################
 temp = master %>%
   group_by(esid_no, Year) %>%
@@ -55,12 +55,25 @@ temp = master %>%
 master = master %>% 
   left_join(temp, by=c('Year','esid_no'))
 
+# Charter Count (District)
+#########################
 temp = master %>%
   group_by(GEOGRAPHICAL_DISTRICT_CODE, Year) %>%
   dplyr::summarize(charter_count_district = sum(charter))
 
 master = master %>% 
   left_join(temp, by=c('Year','GEOGRAPHICAL_DISTRICT_CODE'))
+
+# Charter Performance (Zone)
+#########################
+temp = master %>%
+  group_by(esid_no, Year) %>%
+  filter(charter == 1) %>% 
+  dplyr::summarize(charter_score = mean(Mean.Scale.Score))
+
+master = master %>% 
+  left_join(temp, by=c('Year','esid_no'))
+
 
 # Cohorts
 #########################
@@ -105,7 +118,7 @@ ggplot(data = master, aes(x = Year, y = Mean.Scale.Score, group = DBN, colour = 
   geom_point() +
   scale_color_manual(values=c("#56B4E9", "#E69F00")) +
   ggtitle("Scores over time by grade") +
-  labs(colour = 'charter')
+  labs(colour = 'charter') +
   facet_wrap(~Grade)
 
 # Plot Scores over time by grade (Colored by # of Charters in Zone)
@@ -239,16 +252,20 @@ ggplot(data = temp, aes(x=Year, y = charter_count_district, group = GEOGRAPHICAL
 
 master2 = master %>% 
   filter(charter == 0) 
+master2 = master2[!is.na(master2$esid_no),]
 
-mm.mod1 = lmer(Mean.Scale.Score ~ Poverty + Disabled + Ell + Asian + Black + Hispanic + 
+mm.mod1 = lmer(Mean.Scale.Score ~ charter_count + Poverty + Disabled + Ell + Asian + Black + Hispanic + charter_score + new +
                  (charter_count | GEOGRAPHICAL_DISTRICT_CODE), data = master2)
 
-mm.mod2 = lmer(Mean.Scale.Score ~ Poverty + Disabled + Ell + Asian + Black + Hispanic + 
+mm.mod2 = lmer(Mean.Scale.Score ~ charter_count + Poverty + Disabled + Ell + Asian + Black + Hispanic + charter_score + new +
                  (charter_count | GEOGRAPHICAL_DISTRICT_CODE/DBN), data = master2)
 
-mm.mod2 = lmer(Mean.Scale.Score ~ Poverty + Disabled + Ell + Asian + Black + Hispanic + 
+mm.mod3 = lmer(Mean.Scale.Score ~ charter_count + Poverty + Disabled + Ell + Asian + Black + Hispanic + Year + cohort + charter_score + new +
                  (charter_count | GEOGRAPHICAL_DISTRICT_CODE/DBN), data = master2)
 
 summary(mm.mod1)
 summary(mm.mod2)
+summary(mm.mod3)
+
 anova(mm.mod1, mm.mod2, refit = F)
+
