@@ -13,9 +13,10 @@ nyc_open13_slug = 'data/academic_2013-2018'
 nyc_doe_slug = 'data/nyc_doe'
 locations_slug = 'data/locations'
 
-##############################
-# Load Data
-##############################
+########################################################################################################################
+                                                    # Load Data                                                      
+########################################################################################################################
+
 
 # NYC TEST SCORES FROM OPEN DATA
 ##############################
@@ -23,13 +24,13 @@ locations_slug = 'data/locations'
 # NYC Open Data 2006-2013
 files_nyc_open06 = list.files(nyc_open06_slug)
 nyc_open06 = list()
-nyc_open06 = lapply(paste(nyc_open06_slug,files_nyc_open06,sep='/'),read.csv)
+nyc_open06 = lapply(paste(nyc_open06_slug,files_nyc_open06,sep='/'),read.csv, stringsAsFactors = F)
 names(nyc_open06) = files_nyc_open06
 
 # NYC Open Data 2013-2017
 files_nyc_open13 = list.files(nyc_open13_slug)
 nyc_open13 = list()
-nyc_open13 = lapply(paste(nyc_open13_slug,files_nyc_open13,sep='/'),read.csv)
+nyc_open13 = lapply(paste(nyc_open13_slug,files_nyc_open13,sep='/'),read.csv, stringsAsFactors = F)
 names(nyc_open13) = files_nyc_open13
 
 # NYC TEST SCORES FROM NYC DOE (2013-2018)
@@ -100,56 +101,164 @@ colnames(demographics)[19:38] = colnames_to_fix
 # Fix Year Column
 demographics$Year = as.integer(paste('20',substr(demographics$Year,6,7),sep=''))
 
+# Data Exported from QGIS (schools merged with zones)
+##############################
+qgis_exports = list.files('data/qgis_exports/')
+qgis_list = list()
+qgis_list = lapply(paste('data/qgis_exports/',qgis_exports,sep='/'), read.csv, stringsAsFactors = F)
+
+# Then combine list of data frames into single dataframe
+qgis_df = rbind.fill(qgis_list)
+cols_to_keep = c('DBN','esid_no')
+
+#### Using Only Latest Zones
+# Subset Dataframe
+qgis_df = qgis_df[qgis_df$math==1 & qgis_df$Year == 2018,cols_to_keep]
+qgis_df = unique(qgis_df)
 
 
+########################################################################################################################
+                                                  # Aggregate Data                                                      
+########################################################################################################################
 
 ##############################
-##### Master: Aggregate NYC DOE Test Scores from NYC DOE Data
+##### Data from NYC DOE (2013-2018)
 ##############################
+
+# There are four DOE files: charter_math, charter_ela, all_math, and all_ela.
+# I need to make sure that they all have consistent column names, then merge them.
 
 # Fix NYC DOE Column Names
 nyc_doe_columns = c('DBN','School.Name','Grade','Year','Category','Number.Tested','Mean.Scale.Score',
                     paste(rep(c("Lvl1","Lvl2","Lvl3","Lvl4","Lvl3_4"),each=2),
                           rep(c('_cnt','_per'),5),
                           sep=''))
-
 colnames(charter_math) = colnames(charter_ela) = colnames(all_math) = colnames(all_ela) = nyc_doe_columns
 
-# Merge Sheets for "All Grades" in the year 2015 and Math
-df = rbind(charter_math %>% 
-             # filter(Grade == 'All Grades') %>% 
-             mutate(charter = 1,
-                    math = 1,
-                    ela = 0),
-           charter_ela %>% 
-             # filter(Grade == 'All Grades') %>% 
-             mutate(charter = 1,
-                    math = 0,
-                    ela = 1),
-           all_math %>% 
-             # filter(Grade == 'All Grades') %>% 
-             mutate(charter = 0,
-                    math = 1,
-                    ela = 0),
-           all_ela %>% 
-             # filter(Grade == 'All Grades') %>% 
-             mutate(charter = 0,
-                    math = 0,
-                    ela = 1))
+# Bind the four files. Create columns called charter, math, and ela for each file.
+df = rbind(charter_math %>%
+             mutate(charter = TRUE,
+                    math = TRUE,
+                    ela = FALSE),
+           charter_ela %>%
+             mutate(charter = TRUE,
+                    math = FALSE,
+                    ela = TRUE),
+           all_math %>%
+             mutate(charter = FALSE,
+                    math = TRUE,
+                    ela = FALSE),
+           all_ela %>%
+             mutate(charter = FALSE,
+                    math = FALSE,
+                    ela = TRUE))
 
+# Subset data to include only these columns
+df = df %>% select('DBN','Grade','Year','Number.Tested','Mean.Scale.Score','charter','math')
+
+# Change scores from character to numeric
 df$Mean.Scale.Score = as.numeric(df$Mean.Scale.Score)
+# df = df[which(!is.na(df$Mean.Scale.Score)),]
 
-# Remove Missing Scores ## !!!!!!!!!!!!!!!!!!!!
-df = df[which(!is.na(df$Mean.Scale.Score)),]
+##############################
+##### Data from NYC Open Data (2006-2012) and (2013-2018)
+##############################
 
+#### 2006 - 2012
+##############################
+
+# Before merging, I need to create indicators in the data letting me know 
+# whether the data is from Math vs ELA or Charter vs TPS
+math_files_06 = sapply('Math',grepl,files_nyc_open06,fixed='True')
+charter_files_06 = sapply('Charter',grepl,files_nyc_open06,fixed='True')
+for(i in 1:4){
+  nyc_open06[[i]]$math = math_files_06[i]
+  nyc_open06[[i]]$charter = charter_files_06[i]
+}
+
+# Bind Datasets, subset to selected columns, convert scores to numeric
+nyc_open06_full = rbind.fill(nyc_open06)
+cols_to_keep_06 = c('DBN','Grade','Year','Number.Tested','Mean.Scale.Score','charter','math')
+nyc_open06_full = nyc_open06_full[,cols_to_keep_06]
+nyc_open06_full$Mean.Scale.Score = as.numeric(as.character(nyc_open06_full$Mean.Scale.Score))
+
+#### 2013 - 2018
+##############################
+math_files_13 = sapply('Math',grepl,files_nyc_open13,fixed='True')
+charter_files_13 = sapply('Charter',grepl,files_nyc_open13,fixed='True')
+
+for(i in 1:4){
+  nyc_open13[[i]]$math = math_files_13[i]
+  nyc_open13[[i]]$charter = charter_files_13[i]
+}
+
+# Bind datasets
+nyc_open13_full = rbind.fill(nyc_open13)
+
+# Category Column only in 2013-2018 that provides scores for groups such as ELL. 
+# Exclude these observations by only keeping data where Category == 'All Students'
+nyc_open13_full = nyc_open13_full %>%
+  filter(Category == 'All Students')
+
+# Subset to selected columns, convert scores to numeric
+cols_to_keep_13 = c('DBN','Grade','Year','Number.Tested','Mean.Scale.Score','charter','math')
+nyc_open13_full = nyc_open13_full[,cols_to_keep_13]
+nyc_open13_full$Mean.Scale.Score = as.numeric(as.character(nyc_open13_full$Mean.Scale.Score))
+nyc_open13_full$Number.Tested = as.numeric(as.character(nyc_open13_full$Number.Tested))
+
+##############################
+# For years 2013-2018, I have both Open Data AND DOE data.
+# Open Data contains data that is not included in the DOE Data.
+# So I want to identify the rows that are contained in Open Data 
+# but NOT in DOE data, then merge the two files, excluding duplicates.
+##############################
+
+# Quick Inventory of DOE data
+# DOE Data
+df$math = as.logical(df$math)
+doe_inventory = df %>% 
+  group_by(DBN, Year, Grade, math) %>%
+  dplyr::summarise(n())
+
+# Create ID column
+doe_inventory = doe_inventory %>%
+  mutate(id = paste(DBN, Year, Grade, math))
+
+# NYC Open Data
+open_inventory = nyc_open13_full %>% 
+  group_by(DBN, Year, Grade, math) %>%
+  dplyr::summarise(n())
+
+# Create ID Column
+open_inventory = open_inventory %>%
+  mutate(id = paste(DBN, Year, Grade, math))
+
+# Cross Check IDs
+# Subset NYC Open Data to Append to Master Dataset
+open_data_to_include = open_inventory[!open_inventory$id %in% doe_inventory$id,]
+
+##############################
+# Bind Datasets
+##############################
+df = df %>%
+  bind_rows(nyc_open06_full) %>% 
+  bind_rows(nyc_open13_full %>%
+              mutate(id = paste(DBN, Year, Grade, math)) %>%
+              filter(id %in% open_data_to_include$id) %>%
+              select(-id))
 
 ##############################
 ##### Add Location and selected Demographics (will add race-related variables next)
 ##############################
 
-# Join Location with Master File
+# Join Location with Master File (Location only contains 2013-2018)
 master = df %>%
   left_join(locations, by = c('DBN' = 'ATS.SYSTEM.CODE', 'Year' = 'FISCAL_YEAR'))
+
+# Join Locations for 2006-2012
+master[master$Year<2013,] = df[df$Year<2013,] %>%
+  left_join(locations[locations$FISCAL_YEAR==2013,], by = c('DBN' = 'ATS.SYSTEM.CODE')) %>%
+  select(-FISCAL_YEAR)
 
 # Join Demographics with Master File
 master = master %>%
@@ -159,6 +268,13 @@ master = master %>%
          Poverty = as.numeric(Poverty)) %>%
   dplyr::select(-Students.with.Disabilities,-English.Language.Learners)
 
+# Join School Zone ID from QGIS
+master = master %>% 
+  left_join(qgis_df, by=c('DBN'))
+
+########################################################################################################################
+                                                  # Diversity Index                                                     
+########################################################################################################################
 
 ##############################
 ##### Diversity Index 
@@ -238,12 +354,94 @@ master = master %>%
   left_join(diversity, by = c('GEOGRAPHICAL_DISTRICT_CODE', 'Year'))
 
 
+
+
+
+########################################################################################################################
+                                            # Prepare Data for Modeling
+########################################################################################################################
+
+# Filter / Subset Dataset
 ##############################
-##### Export
+master = master %>% 
+  filter(math == 1,
+         Grade != 'All Grades') %>%
+  mutate(year_sch = paste(DBN,Year,sep='_'))
+
+# Generate Year/Grade Column
 ##############################
+master$GradeYear = paste(master$Grade,master$Year,sep='_')
+
+# Remove Missing Scores
+##############################
+z = which(is.na(master$Mean.Scale.Score))
+master = master[-z,]
+
+# Standardize Scores for Math by Grade and Year
+##############################
+mean_scores_grade_year = tapply(master$Mean.Scale.Score,master$GradeYear,mean)
+grade_sd_year = tapply(master$Mean.Scale.Score,master$GradeYear,sd)
+grade_years = names(mean_scores_grade_year)
+
+for(i in 1:length(grade_years)){
+  master$Mean.Scale.Score[master$GradeYear==grade_years[i]] = (master$Mean.Scale.Score[master$GradeYear==grade_years[i]] - mean_scores_grade_year[i]) / grade_sd_year[i]  
+}
+
+# Charter Count (Zone)
+#########################
+temp = master %>%
+  group_by(esid_no, Year) %>%
+  dplyr::summarize(charter_count = sum(charter),
+                   charter_share = sum(charter)/length(charter))
+
+master = master %>% 
+  left_join(temp, by=c('Year','esid_no'))
+
+# Charter Count (District)
+#########################
+temp = master %>%
+  group_by(GEOGRAPHICAL_DISTRICT_CODE, Year) %>%
+  dplyr::summarize(charter_count_district = sum(charter),
+                   charter_share_district = sum(charter)/length(charter))
+
+master = master %>% 
+  left_join(temp, by=c('Year','GEOGRAPHICAL_DISTRICT_CODE'))
+
+# Charter Performance (Zone)
+#########################
+temp = master %>%
+  group_by(esid_no, Year) %>%
+  filter(charter == 1) %>% 
+  dplyr::summarize(charter_score = mean(Mean.Scale.Score))
+
+master = master %>% 
+  left_join(temp, by=c('Year','esid_no'))
+
+# Cohorts
+#########################
+master$cohort = master$Year-(as.numeric(master$Grade)-1)
+
+# New Charters in Zone
+#########################
+new_charters = master %>% 
+  group_by(esid_no,Year) %>%
+  dplyr::summarize(n = mean(charter_count))
+
+new_charters = new_charters %>%
+  mutate(Year2 = Year - 1) %>%
+  left_join(new_charters, by = c('Year2' = 'Year', 'esid_no' = 'esid_no')) %>%
+  mutate(new = n.x - n.y) %>%
+  select(Year, esid_no, new)
+
+new_charters$new[is.na(new_charters$new)] = 0
+
+master = master %>%
+  left_join(new_charters, by = c('Year', 'esid_no'))
+
+########################################################################################################################
+                                                      # Export
+########################################################################################################################
 
 # Export
 write.csv(master,'data/master.csv', row.names = F)
-
-
 

@@ -5,9 +5,9 @@
   <evaluateDefaultValues active="0"/>
   <layer-tree-group expanded="1" checked="Qt::PartiallyChecked" name="">
     <customproperties/>
-    <layer-tree-group expanded="0" checked="Qt::Checked" name="schools">
+    <layer-tree-group expanded="1" checked="Qt::PartiallyChecked" name="schools">
       <customproperties/>
-      <layer-tree-layer expanded="0" providerKey="delimitedtext" checked="Qt::Checked" id="elem_math_allgrades_201820181105215858879" source="file:///Users/Chansoo/Desktop/Charter_School_Project/data/merged_scores_and_longlat/elem_math_allgrades_2018.csv?type=csv&amp;xField=lon&amp;yField=lat&amp;spatialIndex=no&amp;subsetIndex=no&amp;watchFile=no" name="elem_math_allgrades_2018">
+      <layer-tree-layer expanded="0" providerKey="delimitedtext" checked="Qt::Unchecked" id="elem_math_allgrades_201820181105215858879" source="file:///Users/Chansoo/Desktop/Charter_School_Project/data/merged_scores_and_longlat/elem_math_allgrades_2018.csv?type=csv&amp;xField=lon&amp;yField=lat&amp;spatialIndex=no&amp;subsetIndex=no&amp;watchFile=no" name="elem_math_allgrades_2018">
         <customproperties>
           <property key="expandedLegendNodes"/>
         </customproperties>
@@ -17,30 +17,30 @@
           <property key="expandedLegendNodes"/>
         </customproperties>
       </layer-tree-layer>
-      <layer-tree-layer expanded="0" providerKey="delimitedtext" checked="Qt::Checked" id="elem_math_allgrades_201620181106080912464" source="file:///Users/Chansoo/Desktop/Charter_School_Project/data/merged_scores_and_longlat/elem_math_allgrades_2016.csv?type=csv&amp;xField=lon&amp;yField=lat&amp;spatialIndex=no&amp;subsetIndex=no&amp;watchFile=no" name="elem_math_allgrades_2016">
+      <layer-tree-layer expanded="0" providerKey="delimitedtext" checked="Qt::Unchecked" id="elem_math_allgrades_201620181106080912464" source="file:///Users/Chansoo/Desktop/Charter_School_Project/data/merged_scores_and_longlat/elem_math_allgrades_2016.csv?type=csv&amp;xField=lon&amp;yField=lat&amp;spatialIndex=no&amp;subsetIndex=no&amp;watchFile=no" name="elem_math_allgrades_2016">
         <customproperties>
           <property key="expandedLegendNodes"/>
         </customproperties>
       </layer-tree-layer>
-      <layer-tree-layer expanded="0" providerKey="delimitedtext" checked="Qt::Checked" id="elem_math_allgrades_201520181106080926658" source="file:///Users/Chansoo/Desktop/Charter_School_Project/data/merged_scores_and_longlat/elem_math_allgrades_2015.csv?type=csv&amp;xField=lon&amp;yField=lat&amp;spatialIndex=no&amp;subsetIndex=no&amp;watchFile=no" name="elem_math_allgrades_2015">
+      <layer-tree-layer expanded="0" providerKey="delimitedtext" checked="Qt::Unchecked" id="elem_math_allgrades_201520181106080926658" source="file:///Users/Chansoo/Desktop/Charter_School_Project/data/merged_scores_and_longlat/elem_math_allgrades_2015.csv?type=csv&amp;xField=lon&amp;yField=lat&amp;spatialIndex=no&amp;subsetIndex=no&amp;watchFile=no" name="elem_math_allgrades_2015">
         <customproperties>
           <property key="expandedLegendNodes"/>
         </customproperties>
       </layer-tree-layer>
-      <layer-tree-layer expanded="0" providerKey="delimitedtext" checked="Qt::Checked" id="elem_math_allgrades_201520181106081554933" source="file:///Users/Chansoo/Desktop/Charter_School_Project/data/merged_scores_and_longlat/elem_math_allgrades_2015.csv?type=csv&amp;xField=lon&amp;yField=lat&amp;spatialIndex=no&amp;subsetIndex=no&amp;watchFile=no" name="elem_math_allgrades_2015">
+      <layer-tree-layer expanded="0" providerKey="delimitedtext" checked="Qt::Unchecked" id="elem_math_allgrades_201520181106081554933" source="file:///Users/Chansoo/Desktop/Charter_School_Project/data/merged_scores_and_longlat/elem_math_allgrades_2015.csv?type=csv&amp;xField=lon&amp;yField=lat&amp;spatialIndex=no&amp;subsetIndex=no&amp;watchFile=no" name="elem_math_allgrades_2015">
         <customproperties>
           <property key="expandedLegendNodes"/>
         </customproperties>
       </layer-tree-layer>
-      <layer-tree-layer expanded="0" providerKey="delimitedtext" checked="Qt::Checked" id="elem_math_allgrades_201420181106080939972" source="file:///Users/Chansoo/Desktop/Charter_School_Project/data/merged_scores_and_longlat/elem_math_allgrades_2014.csv?type=csv&amp;xField=lon&amp;yField=lat&amp;spatialIndex=no&amp;subsetIndex=no&amp;watchFile=no" name="elem_math_allgrades_2014">
+      <layer-tree-layer expanded="0" providerKey="delimitedtext" checked="Qt::Unchecked" id="elem_math_allgrades_201420181106080939972" source="file:///Users/Chansoo/Desktop/Charter_School_Project/data/merged_scores_and_longlat/elem_math_allgrades_2014.csv?type=csv&amp;xField=lon&amp;yField=lat&amp;spatialIndex=no&amp;subsetIndex=no&amp;watchFile=no" name="elem_math_allgrades_2014">
         <customproperties>
           <property key="expandedLegendNodes"/>
         </customproperties>
       </layer-tree-layer>
     </layer-tree-group>
-    <layer-tree-group expanded="1" checked="Qt::Unchecked" name="2018">
+    <layer-tree-group expanded="1" checked="Qt::PartiallyChecked" name="2018">
       <customproperties/>
-      <layer-tree-layer expanded="0" providerKey="memory" checked="Qt::Unchecked" id="memory_20181106085857020" source="Polygon?uuid=19133c13-886e-48c7-b1d8-efa50fc03be7&amp;crs=EPSG:4326&amp;field=school_dis:double&amp;field=shape_area:double&amp;field=shape_leng:double&amp;field=DBN:string&amp;field=School.Name:string&amp;field=Grade:integer&amp;field=Year:integer&amp;field=Category:string&amp;field=Number.Tested:integer&amp;field=Mean.Scale.Score:double&amp;field=Lvl1_cnt:integer&amp;field=Lvl1_per:double&amp;field=Lvl2_cnt:integer&amp;field=Lvl2_per:double&amp;field=Lvl3_cnt:integer&amp;field=Lvl3_per:double&amp;field=Lvl4_cnt:integer&amp;field=Lvl4_per:double&amp;field=Lvl3_4_cnt:integer&amp;field=Lvl3_4_per:double&amp;field=charter:integer&amp;field=math:integer&amp;field=ela:integer&amp;field=GEOGRAPHICAL_DISTRICT_CODE:integer&amp;field=NTA:string&amp;field=NTA_NAME:string&amp;field=CENSUS_TRACT:integer&amp;field=Location.1:string&amp;field=Poverty:string&amp;field=Disabled:integer&amp;field=Ell:string&amp;field=Total.Enrollment:integer&amp;field=Asian:integer&amp;field=Black:integer&amp;field=Hispanic:integer&amp;field=Multiple.Race.Categories.Not.Represented:integer&amp;field=White:integer&amp;field=shannon:double&amp;field=shannon_nta:double&amp;field=shannon_cd:double&amp;field=lat:double&amp;field=lon:double" name="2018_district_math">
+      <layer-tree-layer expanded="0" providerKey="memory" checked="Qt::Checked" id="memory_20181106085857020" source="Polygon?uuid=19133c13-886e-48c7-b1d8-efa50fc03be7&amp;crs=EPSG:4326&amp;field=school_dis:double&amp;field=shape_area:double&amp;field=shape_leng:double&amp;field=DBN:string&amp;field=School.Name:string&amp;field=Grade:integer&amp;field=Year:integer&amp;field=Category:string&amp;field=Number.Tested:integer&amp;field=Mean.Scale.Score:double&amp;field=Lvl1_cnt:integer&amp;field=Lvl1_per:double&amp;field=Lvl2_cnt:integer&amp;field=Lvl2_per:double&amp;field=Lvl3_cnt:integer&amp;field=Lvl3_per:double&amp;field=Lvl4_cnt:integer&amp;field=Lvl4_per:double&amp;field=Lvl3_4_cnt:integer&amp;field=Lvl3_4_per:double&amp;field=charter:integer&amp;field=math:integer&amp;field=ela:integer&amp;field=GEOGRAPHICAL_DISTRICT_CODE:integer&amp;field=NTA:string&amp;field=NTA_NAME:string&amp;field=CENSUS_TRACT:integer&amp;field=Location.1:string&amp;field=Poverty:string&amp;field=Disabled:integer&amp;field=Ell:string&amp;field=Total.Enrollment:integer&amp;field=Asian:integer&amp;field=Black:integer&amp;field=Hispanic:integer&amp;field=Multiple.Race.Categories.Not.Represented:integer&amp;field=White:integer&amp;field=shannon:double&amp;field=shannon_nta:double&amp;field=shannon_cd:double&amp;field=lat:double&amp;field=lon:double" name="2018_district_math">
         <customproperties/>
       </layer-tree-layer>
       <layer-tree-layer expanded="0" providerKey="memory" checked="Qt::Unchecked" id="memory_20181106083207879" source="Polygon?uuid=5eb18f01-a6ef-49df-878e-5689c7bfe19e&amp;crs=EPSG:4326&amp;field=school_dis:double&amp;field=shape_area:double&amp;field=shape_leng:double&amp;field=DBN:string&amp;field=School.Name:string&amp;field=Grade:integer&amp;field=Year:integer&amp;field=Category:string&amp;field=Number.Tested:integer&amp;field=Mean.Scale.Score:double&amp;field=Lvl1_cnt:integer&amp;field=Lvl1_per:double&amp;field=Lvl2_cnt:integer&amp;field=Lvl2_per:double&amp;field=Lvl3_cnt:integer&amp;field=Lvl3_per:double&amp;field=Lvl4_cnt:integer&amp;field=Lvl4_per:double&amp;field=Lvl3_4_cnt:integer&amp;field=Lvl3_4_per:double&amp;field=charter:integer&amp;field=math:integer&amp;field=ela:integer&amp;field=GEOGRAPHICAL_DISTRICT_CODE:integer&amp;field=NTA:string&amp;field=NTA_NAME:string&amp;field=CENSUS_TRACT:integer&amp;field=Location.1:string&amp;field=Poverty:string&amp;field=Disabled:integer&amp;field=Ell:string&amp;field=Total.Enrollment:integer&amp;field=Asian:integer&amp;field=Black:integer&amp;field=Hispanic:integer&amp;field=Multiple.Race.Categories.Not.Represented:integer&amp;field=White:integer&amp;field=shannon:double&amp;field=shannon_nta:double&amp;field=shannon_cd:double&amp;field=lat:double&amp;field=lon:double" name="2018_district_diversity">
@@ -297,10 +297,10 @@
     </custom-order>
   </layer-tree-canvas>
   <legend updateDrawingOrder="true">
-    <legendgroup open="false" checked="Qt::Checked" name="schools">
-      <legendlayer drawingOrder="-1" open="false" checked="Qt::Checked" name="elem_math_allgrades_2018" showFeatureCount="0">
+    <legendgroup open="true" checked="Qt::PartiallyChecked" name="schools">
+      <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="elem_math_allgrades_2018" showFeatureCount="0">
         <filegroup open="false" hidden="false">
-          <legendlayerfile isInOverview="0" layerid="elem_math_allgrades_201820181105215858879" visible="1"/>
+          <legendlayerfile isInOverview="0" layerid="elem_math_allgrades_201820181105215858879" visible="0"/>
         </filegroup>
       </legendlayer>
       <legendlayer drawingOrder="-1" open="false" checked="Qt::Checked" name="elem_math_allgrades_2017" showFeatureCount="0">
@@ -308,31 +308,31 @@
           <legendlayerfile isInOverview="0" layerid="elem_math_allgrades_201720181105215923617" visible="1"/>
         </filegroup>
       </legendlayer>
-      <legendlayer drawingOrder="-1" open="false" checked="Qt::Checked" name="elem_math_allgrades_2016" showFeatureCount="0">
+      <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="elem_math_allgrades_2016" showFeatureCount="0">
         <filegroup open="false" hidden="false">
-          <legendlayerfile isInOverview="0" layerid="elem_math_allgrades_201620181106080912464" visible="1"/>
+          <legendlayerfile isInOverview="0" layerid="elem_math_allgrades_201620181106080912464" visible="0"/>
         </filegroup>
       </legendlayer>
-      <legendlayer drawingOrder="-1" open="false" checked="Qt::Checked" name="elem_math_allgrades_2015" showFeatureCount="0">
+      <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="elem_math_allgrades_2015" showFeatureCount="0">
         <filegroup open="false" hidden="false">
-          <legendlayerfile isInOverview="0" layerid="elem_math_allgrades_201520181106080926658" visible="1"/>
+          <legendlayerfile isInOverview="0" layerid="elem_math_allgrades_201520181106080926658" visible="0"/>
         </filegroup>
       </legendlayer>
-      <legendlayer drawingOrder="-1" open="false" checked="Qt::Checked" name="elem_math_allgrades_2015" showFeatureCount="0">
+      <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="elem_math_allgrades_2015" showFeatureCount="0">
         <filegroup open="false" hidden="false">
-          <legendlayerfile isInOverview="0" layerid="elem_math_allgrades_201520181106081554933" visible="1"/>
+          <legendlayerfile isInOverview="0" layerid="elem_math_allgrades_201520181106081554933" visible="0"/>
         </filegroup>
       </legendlayer>
-      <legendlayer drawingOrder="-1" open="false" checked="Qt::Checked" name="elem_math_allgrades_2014" showFeatureCount="0">
+      <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="elem_math_allgrades_2014" showFeatureCount="0">
         <filegroup open="false" hidden="false">
-          <legendlayerfile isInOverview="0" layerid="elem_math_allgrades_201420181106080939972" visible="1"/>
+          <legendlayerfile isInOverview="0" layerid="elem_math_allgrades_201420181106080939972" visible="0"/>
         </filegroup>
       </legendlayer>
     </legendgroup>
-    <legendgroup open="true" checked="Qt::Unchecked" name="2018">
-      <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="2018_district_math" showFeatureCount="0">
+    <legendgroup open="true" checked="Qt::PartiallyChecked" name="2018">
+      <legendlayer drawingOrder="-1" open="false" checked="Qt::Checked" name="2018_district_math" showFeatureCount="0">
         <filegroup open="false" hidden="false">
-          <legendlayerfile isInOverview="0" layerid="memory_20181106085857020" visible="0"/>
+          <legendlayerfile isInOverview="0" layerid="memory_20181106085857020" visible="1"/>
         </filegroup>
       </legendlayer>
       <legendlayer drawingOrder="-1" open="false" checked="Qt::Unchecked" name="2018_district_diversity" showFeatureCount="0">
@@ -1640,7 +1640,7 @@
       </defaults>
       <previewExpression></previewExpression>
     </maplayer>
-    <maplayer simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="1" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" geometry="Point" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
+    <maplayer simplifyAlgorithm="0" minimumScale="0" maximumScale="1e+08" simplifyDrawingHints="0" minLabelScale="0" maxLabelScale="1e+08" simplifyDrawingTol="1" readOnly="0" geometry="Point" simplifyMaxScale="1" type="vector" hasScaleBasedVisibilityFlag="0" simplifyLocal="1" scaleBasedLabelVisibilityFlag="0">
       <extent>
         <xmin>-74.24394999999999811</xmin>
         <ymin>40.5086379999999977</ymin>
@@ -1791,8 +1791,81 @@
           <widgetv2config IsMultiline="0" fieldEditable="1" constraint="" UseHtml="0" labelOnTop="0" constraintDescription="" notNull="0"/>
         </edittype>
       </edittypes>
-      <renderer-v2 forceraster="0" symbollevels="0" type="singleSymbol" enableorderby="0">
+      <renderer-v2 attr="charter" forceraster="0" symbollevels="0" type="categorizedSymbol" enableorderby="0">
+        <categories>
+          <category render="true" symbol="0" value="0" label="0"/>
+          <category render="true" symbol="1" value="1" label="1"/>
+          <category render="true" symbol="2" value="" label=""/>
+        </categories>
         <symbols>
+          <symbol alpha="1" clip_to_extent="1" type="marker" name="0">
+            <layer pass="0" class="SimpleMarker" locked="0">
+              <prop k="angle" v="0"/>
+              <prop k="color" v="247,0,255,255"/>
+              <prop k="horizontal_anchor_point" v="1"/>
+              <prop k="joinstyle" v="bevel"/>
+              <prop k="name" v="circle"/>
+              <prop k="offset" v="0,0"/>
+              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="offset_unit" v="MM"/>
+              <prop k="outline_color" v="0,0,0,255"/>
+              <prop k="outline_style" v="solid"/>
+              <prop k="outline_width" v="0"/>
+              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="outline_width_unit" v="MM"/>
+              <prop k="scale_method" v="diameter"/>
+              <prop k="size" v="2"/>
+              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="size_unit" v="MM"/>
+              <prop k="vertical_anchor_point" v="1"/>
+            </layer>
+          </symbol>
+          <symbol alpha="1" clip_to_extent="1" type="marker" name="1">
+            <layer pass="0" class="SimpleMarker" locked="0">
+              <prop k="angle" v="0"/>
+              <prop k="color" v="57,255,77,255"/>
+              <prop k="horizontal_anchor_point" v="1"/>
+              <prop k="joinstyle" v="bevel"/>
+              <prop k="name" v="circle"/>
+              <prop k="offset" v="0,0"/>
+              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="offset_unit" v="MM"/>
+              <prop k="outline_color" v="0,0,0,255"/>
+              <prop k="outline_style" v="solid"/>
+              <prop k="outline_width" v="0"/>
+              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="outline_width_unit" v="MM"/>
+              <prop k="scale_method" v="diameter"/>
+              <prop k="size" v="2"/>
+              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="size_unit" v="MM"/>
+              <prop k="vertical_anchor_point" v="1"/>
+            </layer>
+          </symbol>
+          <symbol alpha="1" clip_to_extent="1" type="marker" name="2">
+            <layer pass="0" class="SimpleMarker" locked="0">
+              <prop k="angle" v="0"/>
+              <prop k="color" v="232,84,181,255"/>
+              <prop k="horizontal_anchor_point" v="1"/>
+              <prop k="joinstyle" v="bevel"/>
+              <prop k="name" v="circle"/>
+              <prop k="offset" v="0,0"/>
+              <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="offset_unit" v="MM"/>
+              <prop k="outline_color" v="0,0,0,255"/>
+              <prop k="outline_style" v="solid"/>
+              <prop k="outline_width" v="0"/>
+              <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="outline_width_unit" v="MM"/>
+              <prop k="scale_method" v="diameter"/>
+              <prop k="size" v="2"/>
+              <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
+              <prop k="size_unit" v="MM"/>
+              <prop k="vertical_anchor_point" v="1"/>
+            </layer>
+          </symbol>
+        </symbols>
+        <source-symbol>
           <symbol alpha="1" clip_to_extent="1" type="marker" name="0">
             <layer pass="0" class="SimpleMarker" locked="0">
               <prop k="angle" v="0"/>
@@ -1815,12 +1888,156 @@
               <prop k="vertical_anchor_point" v="1"/>
             </layer>
           </symbol>
-        </symbols>
+        </source-symbol>
+        <colorramp type="randomcolors" name="[source]"/>
+        <invertedcolorramp value="0"/>
         <rotation/>
         <sizescale scalemethod="diameter"/>
       </renderer-v2>
       <labeling type="simple"/>
-      <customproperties/>
+      <customproperties>
+        <property key="embeddedWidgets/count" value="0"/>
+        <property key="labeling" value="pal"/>
+        <property key="labeling/addDirectionSymbol" value="false"/>
+        <property key="labeling/angleOffset" value="0"/>
+        <property key="labeling/blendMode" value="0"/>
+        <property key="labeling/bufferBlendMode" value="0"/>
+        <property key="labeling/bufferColorA" value="255"/>
+        <property key="labeling/bufferColorB" value="255"/>
+        <property key="labeling/bufferColorG" value="255"/>
+        <property key="labeling/bufferColorR" value="255"/>
+        <property key="labeling/bufferDraw" value="false"/>
+        <property key="labeling/bufferJoinStyle" value="128"/>
+        <property key="labeling/bufferNoFill" value="false"/>
+        <property key="labeling/bufferSize" value="1"/>
+        <property key="labeling/bufferSizeInMapUnits" value="false"/>
+        <property key="labeling/bufferSizeMapUnitScale" value="0,0,0,0,0,0"/>
+        <property key="labeling/bufferTransp" value="0"/>
+        <property key="labeling/centroidInside" value="false"/>
+        <property key="labeling/centroidWhole" value="false"/>
+        <property key="labeling/decimals" value="3"/>
+        <property key="labeling/displayAll" value="false"/>
+        <property key="labeling/dist" value="0"/>
+        <property key="labeling/distInMapUnits" value="false"/>
+        <property key="labeling/distMapUnitScale" value="0,0,0,0,0,0"/>
+        <property key="labeling/drawLabels" value="false"/>
+        <property key="labeling/enabled" value="false"/>
+        <property key="labeling/fieldName" value=""/>
+        <property key="labeling/fitInPolygonOnly" value="false"/>
+        <property key="labeling/fontCapitals" value="0"/>
+        <property key="labeling/fontFamily" value=".SF NS Text"/>
+        <property key="labeling/fontItalic" value="false"/>
+        <property key="labeling/fontLetterSpacing" value="0"/>
+        <property key="labeling/fontLimitPixelSize" value="false"/>
+        <property key="labeling/fontMaxPixelSize" value="10000"/>
+        <property key="labeling/fontMinPixelSize" value="3"/>
+        <property key="labeling/fontSize" value="13"/>
+        <property key="labeling/fontSizeInMapUnits" value="false"/>
+        <property key="labeling/fontSizeMapUnitScale" value="0,0,0,0,0,0"/>
+        <property key="labeling/fontStrikeout" value="false"/>
+        <property key="labeling/fontUnderline" value="false"/>
+        <property key="labeling/fontWeight" value="50"/>
+        <property key="labeling/fontWordSpacing" value="0"/>
+        <property key="labeling/formatNumbers" value="false"/>
+        <property key="labeling/isExpression" value="true"/>
+        <property key="labeling/labelOffsetInMapUnits" value="true"/>
+        <property key="labeling/labelOffsetMapUnitScale" value="0,0,0,0,0,0"/>
+        <property key="labeling/labelPerPart" value="false"/>
+        <property key="labeling/leftDirectionSymbol" value="&lt;"/>
+        <property key="labeling/limitNumLabels" value="false"/>
+        <property key="labeling/maxCurvedCharAngleIn" value="25"/>
+        <property key="labeling/maxCurvedCharAngleOut" value="-25"/>
+        <property key="labeling/maxNumLabels" value="2000"/>
+        <property key="labeling/mergeLines" value="false"/>
+        <property key="labeling/minFeatureSize" value="0"/>
+        <property key="labeling/multilineAlign" value="3"/>
+        <property key="labeling/multilineHeight" value="1"/>
+        <property key="labeling/namedStyle" value=""/>
+        <property key="labeling/obstacle" value="true"/>
+        <property key="labeling/obstacleFactor" value="1"/>
+        <property key="labeling/obstacleType" value="0"/>
+        <property key="labeling/offsetType" value="0"/>
+        <property key="labeling/placeDirectionSymbol" value="0"/>
+        <property key="labeling/placement" value="6"/>
+        <property key="labeling/placementFlags" value="10"/>
+        <property key="labeling/plussign" value="false"/>
+        <property key="labeling/predefinedPositionOrder" value="TR,TL,BR,BL,R,L,TSR,BSR"/>
+        <property key="labeling/preserveRotation" value="true"/>
+        <property key="labeling/previewBkgrdColor" value="#ffffff"/>
+        <property key="labeling/priority" value="5"/>
+        <property key="labeling/quadOffset" value="4"/>
+        <property key="labeling/repeatDistance" value="0"/>
+        <property key="labeling/repeatDistanceMapUnitScale" value="0,0,0,0,0,0"/>
+        <property key="labeling/repeatDistanceUnit" value="1"/>
+        <property key="labeling/reverseDirectionSymbol" value="false"/>
+        <property key="labeling/rightDirectionSymbol" value=">"/>
+        <property key="labeling/scaleMax" value="10000000"/>
+        <property key="labeling/scaleMin" value="1"/>
+        <property key="labeling/scaleVisibility" value="false"/>
+        <property key="labeling/shadowBlendMode" value="6"/>
+        <property key="labeling/shadowColorB" value="0"/>
+        <property key="labeling/shadowColorG" value="0"/>
+        <property key="labeling/shadowColorR" value="0"/>
+        <property key="labeling/shadowDraw" value="false"/>
+        <property key="labeling/shadowOffsetAngle" value="135"/>
+        <property key="labeling/shadowOffsetDist" value="1"/>
+        <property key="labeling/shadowOffsetGlobal" value="true"/>
+        <property key="labeling/shadowOffsetMapUnitScale" value="0,0,0,0,0,0"/>
+        <property key="labeling/shadowOffsetUnits" value="1"/>
+        <property key="labeling/shadowRadius" value="1.5"/>
+        <property key="labeling/shadowRadiusAlphaOnly" value="false"/>
+        <property key="labeling/shadowRadiusMapUnitScale" value="0,0,0,0,0,0"/>
+        <property key="labeling/shadowRadiusUnits" value="1"/>
+        <property key="labeling/shadowScale" value="100"/>
+        <property key="labeling/shadowTransparency" value="30"/>
+        <property key="labeling/shadowUnder" value="0"/>
+        <property key="labeling/shapeBlendMode" value="0"/>
+        <property key="labeling/shapeBorderColorA" value="255"/>
+        <property key="labeling/shapeBorderColorB" value="128"/>
+        <property key="labeling/shapeBorderColorG" value="128"/>
+        <property key="labeling/shapeBorderColorR" value="128"/>
+        <property key="labeling/shapeBorderWidth" value="0"/>
+        <property key="labeling/shapeBorderWidthMapUnitScale" value="0,0,0,0,0,0"/>
+        <property key="labeling/shapeBorderWidthUnits" value="1"/>
+        <property key="labeling/shapeDraw" value="false"/>
+        <property key="labeling/shapeFillColorA" value="255"/>
+        <property key="labeling/shapeFillColorB" value="255"/>
+        <property key="labeling/shapeFillColorG" value="255"/>
+        <property key="labeling/shapeFillColorR" value="255"/>
+        <property key="labeling/shapeJoinStyle" value="64"/>
+        <property key="labeling/shapeOffsetMapUnitScale" value="0,0,0,0,0,0"/>
+        <property key="labeling/shapeOffsetUnits" value="1"/>
+        <property key="labeling/shapeOffsetX" value="0"/>
+        <property key="labeling/shapeOffsetY" value="0"/>
+        <property key="labeling/shapeRadiiMapUnitScale" value="0,0,0,0,0,0"/>
+        <property key="labeling/shapeRadiiUnits" value="1"/>
+        <property key="labeling/shapeRadiiX" value="0"/>
+        <property key="labeling/shapeRadiiY" value="0"/>
+        <property key="labeling/shapeRotation" value="0"/>
+        <property key="labeling/shapeRotationType" value="0"/>
+        <property key="labeling/shapeSVGFile" value=""/>
+        <property key="labeling/shapeSizeMapUnitScale" value="0,0,0,0,0,0"/>
+        <property key="labeling/shapeSizeType" value="0"/>
+        <property key="labeling/shapeSizeUnits" value="1"/>
+        <property key="labeling/shapeSizeX" value="0"/>
+        <property key="labeling/shapeSizeY" value="0"/>
+        <property key="labeling/shapeTransparency" value="0"/>
+        <property key="labeling/shapeType" value="0"/>
+        <property key="labeling/substitutions" value="&lt;substitutions/>"/>
+        <property key="labeling/textColorA" value="255"/>
+        <property key="labeling/textColorB" value="0"/>
+        <property key="labeling/textColorG" value="0"/>
+        <property key="labeling/textColorR" value="0"/>
+        <property key="labeling/textTransp" value="0"/>
+        <property key="labeling/upsidedownLabels" value="0"/>
+        <property key="labeling/useSubstitutions" value="false"/>
+        <property key="labeling/wrapChar" value=""/>
+        <property key="labeling/xOffset" value="0"/>
+        <property key="labeling/yOffset" value="0"/>
+        <property key="labeling/zIndex" value="0"/>
+        <property key="variableNames"/>
+        <property key="variableValues"/>
+      </customproperties>
       <blendMode>0</blendMode>
       <featureBlendMode>0</featureBlendMode>
       <layerTransparency>0</layerTransparency>
@@ -1846,6 +2063,34 @@
         <multilineenabled fieldname="" on=""/>
         <selectedonly on=""/>
       </labelattributes>
+      <SingleCategoryDiagramRenderer diagramType="Histogram" sizeLegend="0" attributeLegend="1">
+        <DiagramCategory penColor="#000000" labelPlacementMethod="XHeight" penWidth="0" diagramOrientation="Up" sizeScale="0,0,0,0,0,0" minimumSize="0" barWidth="5" penAlpha="255" maxScaleDenominator="1e+08" backgroundColor="#ffffff" transparency="0" width="15" scaleDependency="Area" backgroundAlpha="255" angleOffset="1440" scaleBasedVisibility="0" enabled="0" height="15" lineSizeScale="0,0,0,0,0,0" sizeType="MM" lineSizeType="MM" minScaleDenominator="inf">
+          <fontProperties description=".SF NS Text,13,-1,5,50,0,0,0,0,0" style=""/>
+        </DiagramCategory>
+        <symbol alpha="1" clip_to_extent="1" type="marker" name="sizeSymbol">
+          <layer pass="0" class="SimpleMarker" locked="0">
+            <prop k="angle" v="0"/>
+            <prop k="color" v="255,0,0,255"/>
+            <prop k="horizontal_anchor_point" v="1"/>
+            <prop k="joinstyle" v="bevel"/>
+            <prop k="name" v="circle"/>
+            <prop k="offset" v="0,0"/>
+            <prop k="offset_map_unit_scale" v="0,0,0,0,0,0"/>
+            <prop k="offset_unit" v="MM"/>
+            <prop k="outline_color" v="0,0,0,255"/>
+            <prop k="outline_style" v="solid"/>
+            <prop k="outline_width" v="0"/>
+            <prop k="outline_width_map_unit_scale" v="0,0,0,0,0,0"/>
+            <prop k="outline_width_unit" v="MM"/>
+            <prop k="scale_method" v="diameter"/>
+            <prop k="size" v="2"/>
+            <prop k="size_map_unit_scale" v="0,0,0,0,0,0"/>
+            <prop k="size_unit" v="MM"/>
+            <prop k="vertical_anchor_point" v="1"/>
+          </layer>
+        </symbol>
+      </SingleCategoryDiagramRenderer>
+      <DiagramLayerSettings yPosColumn="-1" showColumn="-1" linePlacementFlags="10" placement="0" dist="0" xPosColumn="-1" priority="0" obstacle="0" zIndex="0" showAll="1"/>
       <annotationform></annotationform>
       <aliases>
         <alias field="DBN" index="0" name=""/>
@@ -1892,13 +2137,70 @@
       <excludeAttributesWFS/>
       <attributeactions default="-1"/>
       <attributetableconfig actionWidgetStyle="dropDown" sortExpression="" sortOrder="0">
-        <columns/>
+        <columns>
+          <column width="-1" hidden="0" type="field" name="DBN"/>
+          <column width="-1" hidden="0" type="field" name="School.Name"/>
+          <column width="-1" hidden="0" type="field" name="Grade"/>
+          <column width="-1" hidden="0" type="field" name="Year"/>
+          <column width="-1" hidden="0" type="field" name="Category"/>
+          <column width="-1" hidden="0" type="field" name="Number.Tested"/>
+          <column width="-1" hidden="0" type="field" name="Mean.Scale.Score"/>
+          <column width="-1" hidden="0" type="field" name="Lvl1_cnt"/>
+          <column width="-1" hidden="0" type="field" name="Lvl1_per"/>
+          <column width="-1" hidden="0" type="field" name="Lvl2_cnt"/>
+          <column width="-1" hidden="0" type="field" name="Lvl2_per"/>
+          <column width="-1" hidden="0" type="field" name="Lvl3_cnt"/>
+          <column width="-1" hidden="0" type="field" name="Lvl3_per"/>
+          <column width="-1" hidden="0" type="field" name="Lvl4_cnt"/>
+          <column width="-1" hidden="0" type="field" name="Lvl4_per"/>
+          <column width="-1" hidden="0" type="field" name="Lvl3_4_cnt"/>
+          <column width="-1" hidden="0" type="field" name="Lvl3_4_per"/>
+          <column width="-1" hidden="0" type="field" name="charter"/>
+          <column width="-1" hidden="0" type="field" name="math"/>
+          <column width="-1" hidden="0" type="field" name="ela"/>
+          <column width="-1" hidden="0" type="field" name="GEOGRAPHICAL_DISTRICT_CODE"/>
+          <column width="-1" hidden="0" type="field" name="NTA"/>
+          <column width="-1" hidden="0" type="field" name="NTA_NAME"/>
+          <column width="-1" hidden="0" type="field" name="CENSUS_TRACT"/>
+          <column width="-1" hidden="0" type="field" name="Location.1"/>
+          <column width="-1" hidden="0" type="field" name="Poverty"/>
+          <column width="-1" hidden="0" type="field" name="Disabled"/>
+          <column width="-1" hidden="0" type="field" name="Ell"/>
+          <column width="-1" hidden="0" type="field" name="Total.Enrollment"/>
+          <column width="-1" hidden="0" type="field" name="Asian"/>
+          <column width="-1" hidden="0" type="field" name="Black"/>
+          <column width="-1" hidden="0" type="field" name="Hispanic"/>
+          <column width="-1" hidden="0" type="field" name="Multiple.Race.Categories.Not.Represented"/>
+          <column width="-1" hidden="0" type="field" name="White"/>
+          <column width="-1" hidden="0" type="field" name="shannon"/>
+          <column width="-1" hidden="0" type="field" name="shannon_nta"/>
+          <column width="-1" hidden="0" type="field" name="shannon_cd"/>
+          <column width="-1" hidden="0" type="field" name="lat"/>
+          <column width="-1" hidden="0" type="field" name="lon"/>
+          <column width="-1" hidden="1" type="actions"/>
+        </columns>
       </attributetableconfig>
       <editform></editform>
       <editforminit/>
       <editforminitcodesource>0</editforminitcodesource>
       <editforminitfilepath></editforminitfilepath>
-      <editforminitcode><![CDATA[]]></editforminitcode>
+      <editforminitcode><![CDATA[# -*- coding: utf-8 -*-
+"""
+QGIS forms can have a Python function that is called when the form is
+opened.
+
+Use this function to add extra logic to your forms.
+
+Enter the name of the function in the "Python Init function"
+field.
+An example follows:
+"""
+from qgis.PyQt.QtWidgets import QWidget
+
+def my_form_open(dialog, layer, feature):
+	geom = feature.geometry()
+	control = dialog.findChild(QWidget, "MyLineEdit")
+]]></editforminitcode>
       <featformsuppress>0</featformsuppress>
       <editorlayout>generatedlayout</editorlayout>
       <widgets/>

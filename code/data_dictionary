@@ -1,0 +1,38 @@
+Master.csv:
+
+Columns:
+
+ [1] "DBN": School ID                                     
+ [2] "Grade"                                   
+ [3] "Year"                                    
+ [4] "Number.Tested": Number of Students in Grade X, Year Y, School Z                           
+ [5] "Mean.Scale.Score": Mean Score of Students in Grade X, Year Y, School Z
+ [6] "charter": Indicator for Charter School
+ [7] "math": Indicator for Math vs ELA                                    
+ [8] "GEOGRAPHICAL_DISTRICT_CODE": School District Code              
+ [9] "NTA": Neighborhood Tabulation Area                                     
+[10] "NTA_NAME"                                
+[11] "CENSUS_TRACT"                            
+[12] "Location.1"                              
+[13] "Poverty": Number of Students in Poverty Status                                 
+[14] "Disabled": Number of Students with Disabled Status                                
+[15] "Ell": Number of Students in ELL                                     
+[16] "esid_no": School Zone ID                                 
+[17] "Total.Enrollment"                        
+[18] "Asian"                                   
+[19] "Black"                                   
+[20] "Hispanic"                                
+[21] "Multiple.Race.Categories.Not.Represented"
+[22] "White"                                   
+[23] "shannon": Shannon Entropy Index measure of Diversity                                 
+[24] "shannon_nta": Shannon Entropy Index at NTA level                             
+[25] "shannon_cd": Shannon Entorpy Index at School District level                              
+[26] "year_sch": Concatenation of Year and School                                
+[27] "GradeYear": Concatenation of Grade and Year                               
+[28] "charter_count": Share of Charter schools in School Zone in year X                           
+[28] "charter_share": Number of Charter schools in School Zone in year X                           
+[29] "charter_count_district": Number of Charter schools in School District in year X              
+[29] "charter_share_district": Share of Charter schools in School District in year X              
+[30] "charter_score": Average score of Charter schools at School Zone level in year X                            
+[31] "cohort": The year that the grade started 3rd Grade                                  
+[32] "new": Number of New Charter Schools since the previous year in school zone
