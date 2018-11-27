@@ -5,10 +5,7 @@ library(ggplot2)
 setwd('/Users/Chansoo/Desktop/Charter_School_Project/data/')
 
 # Read Data
-rm(list=ls())
 master = read.csv('master.csv')
-
-
 
 ##############################
 # Model
@@ -16,7 +13,6 @@ master = read.csv('master.csv')
 
 master2 = master %>% 
   filter(charter == 0) 
-master2 = master2[!is.na(master2$esid_no),]
 
 mm.mod1 = lmer(Mean.Scale.Score ~ charter_count + Poverty + Disabled + Ell + Asian + Black + Hispanic + charter_score + new +
                  (charter_count | GEOGRAPHICAL_DISTRICT_CODE), data = master2)

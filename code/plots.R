@@ -78,13 +78,13 @@ temp = master %>%
   filter(GEOGRAPHICAL_DISTRICT_CODE>0) %>%
   group_by(Year,Grade,GEOGRAPHICAL_DISTRICT_CODE) %>%
   dplyr::summarise(mean_district_scores = mean(Mean.Scale.Score),
-                   charter_count_district = mean(charter_count_district))
-ggplot(data = temp, aes(x=Year, y = mean_district_scores, group = GEOGRAPHICAL_DISTRICT_CODE, colour = charter_count_district), alpha = 0.8) +
+                   charter_share_district = mean(charter_share_district))
+ggplot(data = temp, aes(x=Year, y = mean_district_scores, group = GEOGRAPHICAL_DISTRICT_CODE, colour = charter_share_district), alpha = 0.8) +
   geom_line() + 
   geom_point() +
   scale_color_gradient(low="grey", high="red") +
   ggtitle("Scores over time by grade") +    
-  labs(colour = '# charter \n in district') +
+  labs(colour = '% charter \n in district') +
   facet_wrap(~Grade)
 
 
@@ -125,13 +125,13 @@ ggplot(data = temp, aes(x = Year, y = Mean.Scale.Score, group = DBN, colour = as
 temp = master %>%
   group_by(Year,cohort,GEOGRAPHICAL_DISTRICT_CODE) %>%
   dplyr::summarise(mean_district_scores = mean(Mean.Scale.Score),
-                   charter_count_district = mean(charter_count_district))
-ggplot(data = temp, aes(x=Year, y = mean_district_scores, group = GEOGRAPHICAL_DISTRICT_CODE, colour = charter_count_district), alpha = 0.8) +
+                   charter_share_district = mean(charter_share_district))
+ggplot(data = temp, aes(x=Year, y = mean_district_scores, group = GEOGRAPHICAL_DISTRICT_CODE, colour = charter_share_district), alpha = 0.8) +
   geom_line() + 
   geom_point() +
   scale_color_gradient(low="grey", high="red") +
   ggtitle("Scores over time by cohort \n (cohort = year student started 3rd grade)") +    
-  labs(colour = '# charter \n in district') +  
+  labs(colour = '% charter \n in district') +  
   facet_wrap(~cohort)
 
 ##############################
