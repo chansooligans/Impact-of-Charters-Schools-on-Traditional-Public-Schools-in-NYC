@@ -87,19 +87,83 @@ locations = rbind.fill(locations)
 # Fix DBN Column
 locations$ATS.SYSTEM.CODE = trimws(locations$ATS.SYSTEM.CODE)
 
+# Demographics 2006-2012 (NYC OPEN DATA)
+##############################
+
+demographics_1 = read.csv('data/demographics/2006_-_2012_School_Demographics_and_Accountability_Snapshot.csv', stringsAsFactors = F)
+
+# Fix Column Names
+colnames(demographics_1)[c(1:6,21:38)] = c('DBN',
+                                           'School.Name',
+                                           'Year',
+                                           'PovertyPercent',
+                                           'frl_percent',
+                                           'Total.Enrollment',
+                                           'English.Language.Learners',
+                                           'English.Language.LearnersPercent',
+                                           'Students.with.Disabilities',
+                                           'Students.with.DisabilitiesPercent',
+                                           'ctt',
+                                           'selfcontained',
+                                           'Asian',
+                                           'AsianPercent',
+                                           'Black',
+                                           'BlackPercent',
+                                           'Hispanic',
+                                           'HispanicPercent',
+                                           'White',
+                                           'WhitePercent',
+                                           'Male',
+                                           'MalePercent',
+                                           'Female',
+                                           'FemalePercent')
+
+
+# Fix Year Column
+demographics_1$Year = as.integer(substr(demographics_1$Year,5,8))
+
 # Demographics 2013-2018 (NYC OPEN DATA)
 ##############################
 
-demographics = read.csv('data/demographics/2013_-_2018_Demographic_Snapshot_School.csv', stringsAsFactors = F)
+demographics_2 = read.csv('data/demographics/2013_-_2018_Demographic_Snapshot_School.csv', stringsAsFactors = F)
 
 # Fix Column Names
-colnames_to_fix = colnames(demographics)[19:38]
+colnames_to_fix = colnames(demographics_2)[19:38]
 colnames_to_fix = substr(colnames_to_fix,4,nchar(colnames_to_fix))
 colnames_to_fix = gsub(".1",'Percent',colnames_to_fix)
-colnames(demographics)[19:38] = colnames_to_fix
+colnames(demographics_2)[19:38] = colnames_to_fix
 
-# Fix Year Column
-demographics$Year = as.integer(paste('20',substr(demographics$Year,6,7),sep=''))
+# Fix Year Column (If 2013-14, keep 2014)
+demographics_2$Year = as.integer(paste('20',substr(demographics_2$Year,6,7),sep=''))
+
+# Remove "Multiple Race Categories Not Represented" for consistency across Demographics Data files
+demographics_2$Total.Enrollment = demographics_2$Total.Enrollment - demographics_2$Multiple.Race.Categories.Not.Represented
+
+# Merge Demographics 
+##############################
+cols_to_keep = c('DBN',
+                 'School.Name',
+                 'Year',
+                 'PovertyPercent',
+                 'Total.Enrollment',
+                 'English.Language.Learners',
+                 'Students.with.Disabilities',
+                 'Asian',
+                 'Black',
+                 'Hispanic',
+                 'White',
+                 'Male',
+                 'Female')
+
+# Fix formatting from char to int
+for(i in cols_to_keep[!cols_to_keep %in% c('DBN','School.Name','PovertyPercent')]){demographics_1[,i] = as.numeric(gsub(",", "", demographics_1[,i]))}
+for(i in cols_to_keep[!cols_to_keep %in% c('DBN','School.Name','PovertyPercent')]){demographics_2[,i] = as.numeric(gsub(",", "", demographics_2[,i]))}
+demographics_2$PovertyPercent = gsub("%","",demographics_2$PovertyPercent)
+
+# Bind
+demographics = bind_rows(demographics_1[,cols_to_keep],
+                         demographics_2[,cols_to_keep])
+demographics$PovertyPercent = as.numeric(gsub(" ","",demographics$PovertyPercent))
 
 # Data Exported from QGIS (schools merged with zones)
 ##############################
@@ -262,10 +326,10 @@ master[master$Year<2013,] = df[df$Year<2013,] %>%
 
 # Join Demographics with Master File
 master = master %>%
-  left_join(demographics[,c('DBN','Year','Students.with.Disabilities','English.Language.Learners','Poverty')], by = c('DBN','Year')) %>%
+  left_join(demographics[,c('DBN','Year','Students.with.Disabilities','English.Language.Learners','PovertyPercent')], by = c('DBN','Year')) %>%
   mutate(Disabled = as.numeric(Students.with.Disabilities),
          Ell = as.numeric(English.Language.Learners),
-         Poverty = as.numeric(Poverty)) %>%
+         PovertyPercent = as.numeric(PovertyPercent)) %>%
   dplyr::select(-Students.with.Disabilities,-English.Language.Learners)
 
 # Join School Zone ID from QGIS
@@ -282,20 +346,16 @@ master = master %>%
 
 # Shannon Entropy by School
 ##############################
-
 diversity = demographics %>%
-  dplyr::select(DBN, Year, Total.Enrollment, Asian, Black, Hispanic, Multiple.Race.Categories.Not.Represented, White)
-
-for(i in 3:8){
-  diversity[,i] = as.numeric(gsub(',','',diversity[,i]))
-}
+  dplyr::select(DBN, Year, Total.Enrollment, Asian, Black, Hispanic, White)
 
 # percents
-percents = diversity[,c(4:8)]/ diversity$Total.Enrollment
+percents = diversity[,c(4:7)]/ diversity$Total.Enrollment
+colnames(percents) = paste(colnames(percents),'Percent',sep='')
 
 # shannon entropy 
 shannon = -apply(percents * log(percents+.001),1,sum)
-diversity = cbind(diversity,shannon)
+diversity = cbind(diversity,shannon,percents)
 
 # Merge with Master
 master = master %>% 
@@ -312,12 +372,11 @@ diversity = master %>%
          Asian = sum(Asian),
          Black = sum(Black),
          Hispanic = sum(Hispanic),
-         Multiple.Race.Categories.Not.Represented = sum(Multiple.Race.Categories.Not.Represented),
          White = sum(White))
 diversity = as.data.frame(diversity)
 
 # percents
-percents = diversity[,c(4:8)]/ diversity$Total.Enrollment
+percents = diversity[,c(4:7)]/ diversity$Total.Enrollment
 
 # shannon entropy 
 shannon_nta = -apply(percents * log(percents+.001),1,sum)
@@ -338,12 +397,11 @@ diversity = master %>%
                    Asian = sum(Asian),
                    Black = sum(Black),
                    Hispanic = sum(Hispanic),
-                   Multiple.Race.Categories.Not.Represented = sum(Multiple.Race.Categories.Not.Represented),
                    White = sum(White))
 diversity = as.data.frame(diversity)
 
 # percents
-percents = diversity[,c(4:8)]/ diversity$Total.Enrollment
+percents = diversity[,c(4:7)]/ diversity$Total.Enrollment
 
 # shannon entropy 
 shannon_cd = -apply(percents * log(percents+.001),1,sum)
@@ -364,8 +422,7 @@ master = master %>%
 # Filter / Subset Dataset
 ##############################
 master = master %>% 
-  filter(math == 1,
-         Grade != 'All Grades') %>%
+  filter(Grade != 'All Grades') %>%
   mutate(year_sch = paste(DBN,Year,sep='_'))
 
 # Generate Year/Grade Column
@@ -410,10 +467,9 @@ master = master %>%
 # Charter Performance (Zone)
 #########################
 temp = master %>%
-  group_by(esid_no, Year) %>%
   filter(charter == 1) %>% 
+  group_by(esid_no, Year) %>%
   dplyr::summarize(charter_score = mean(Mean.Scale.Score))
-
 master = master %>% 
   left_join(temp, by=c('Year','esid_no'))
 
@@ -430,13 +486,17 @@ new_charters = master %>%
 new_charters = new_charters %>%
   mutate(Year2 = Year - 1) %>%
   left_join(new_charters, by = c('Year2' = 'Year', 'esid_no' = 'esid_no')) %>%
-  mutate(new = n.x - n.y) %>%
-  select(Year, esid_no, new)
+  mutate(new_charts = n.x - n.y) %>%
+  select(Year, esid_no, new_charts)
 
-new_charters$new[is.na(new_charters$new)] = 0
+new_charters$new_charts[is.na(new_charters$new_charts)] = 0
 
 master = master %>%
   left_join(new_charters, by = c('Year', 'esid_no'))
+
+# Rename some columns for convenience
+colnames(master)[8] = 'district'
+colnames(master) = tolower(colnames(master))
 
 ########################################################################################################################
                                                       # Export
@@ -444,4 +504,15 @@ master = master %>%
 
 # Export
 write.csv(master,'data/master.csv', row.names = F)
+
+
+
+
+
+
+
+
+
+
+
 
