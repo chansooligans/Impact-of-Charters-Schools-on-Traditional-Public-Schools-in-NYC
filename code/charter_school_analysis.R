@@ -7,6 +7,7 @@ setwd('/Users/Chansoo/Desktop/Charter_School_Project/data/')
 
 # Read Data
 master = read.csv('master.csv')
+
 master = master %>% mutate(ellpercent = ell/total.enrollment,
                            disabledpercent = disabled/total.enrollment)
 missing_data = which(apply(is.na(master[,c('povertypercent','disabledpercent','ellpercent','asianpercent','blackpercent','hispanicpercent','district','dbn','mean.scale.score')]),1,sum)>0)
@@ -37,8 +38,8 @@ um.mod.vars$vcov[3] / sum(um.mod.vars$vcov) # ICC district
 
 # Add Treatment Covariate + Random Slope
 ##############################
-mod1 = lmer(mean.scale.score ~ charter_count + (1 | district/dbn/cohort), data = df)
-mod2 = lmer(mean.scale.score ~ charter_count + (charter_count | district/dbn/cohort), data = df)
+mod1 = lmer(mean.scale.score ~ charter_count + (1 | district/dbn), data = df)
+mod2 = lmer(mean.scale.score ~ charter_count + (1 | district/dbn) + (charter_count | dbn), data = df)
 summary(mod1)
 summary(mod2)
 anova(mod1,mod2,refit=F)
@@ -46,7 +47,7 @@ anova(mod1,mod2,refit=F)
 # Add Demographics
 ##############################
 mod3 = lmer(mean.scale.score ~ charter_count + povertypercent + disabledpercent + ellpercent + asianpercent + blackpercent + hispanicpercent +
-                 (charter_count | district/dbn/cohort), data = df)
+              (1 | district/dbn), data = df)
 summary(mod3)
 anova(mod1,mod2,mod3,refit=F)
 

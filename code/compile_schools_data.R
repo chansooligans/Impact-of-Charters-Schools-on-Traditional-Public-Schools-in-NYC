@@ -4,6 +4,7 @@ library(plyr)
 library(tidyr)
 library(openxlsx)
 library(reshape2)
+library(data.table)
 
 # File Locations
 rm(list=ls())
@@ -448,18 +449,18 @@ for(i in 1:length(grade_years)){
 #########################
 temp = master %>%
   group_by(esid_no, Year) %>%
-  dplyr::summarize(charter_count = sum(charter),
-                   charter_share = sum(charter)/length(charter))
-
+  dplyr::summarize(charter_count = uniqueN(DBN[charter == 1]),
+                   charter_share = uniqueN(DBN[charter == 1])/uniqueN(DBN))
 master = master %>% 
   left_join(temp, by=c('Year','esid_no'))
 
 # Charter Count (District)
 #########################
 temp = master %>%
+  filter(charter == 1) %>% 
   group_by(GEOGRAPHICAL_DISTRICT_CODE, Year) %>%
-  dplyr::summarize(charter_count_district = sum(charter),
-                   charter_share_district = sum(charter)/length(charter))
+  dplyr::summarize(charter_count_district = uniqueN(DBN[charter == 1]),
+                   charter_share_district = uniqueN(DBN[charter == 1])/uniqueN(DBN))
 
 master = master %>% 
   left_join(temp, by=c('Year','GEOGRAPHICAL_DISTRICT_CODE'))
@@ -504,6 +505,8 @@ colnames(master) = tolower(colnames(master))
 
 # Export
 write.csv(master,'data/master.csv', row.names = F)
+
+
 
 
 
