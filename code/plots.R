@@ -51,6 +51,7 @@ plot_list[[3]] = ggplot(data = temp, aes(x = year, y = mean.scale.score, group =
 #########################
 
 # Plot Scores over time by grade (Colored by Charter)
+
 plot_list[[4]] = ggplot(data = master, aes(x = year, y = mean.scale.score, group = dbn, colour = as.factor(charter)), alpha = 0.4) +
   geom_line() + geom_point() +
   scale_color_manual(values=c("#56B4E9", "#E69F00")) +

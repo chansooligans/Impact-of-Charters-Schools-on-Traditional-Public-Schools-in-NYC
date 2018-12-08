@@ -54,9 +54,9 @@ anova(mod1,mod2,mod3,refit=F)
 # Add new_charts, cohort
 ##############################
 mod4 = lmer(mean.scale.score ~ charter_count + povertypercent + disabledpercent + ellpercent + asianpercent + blackpercent + hispanicpercent + new_charts +
-              (charter_count | district/dbn), data = df)
+              (1 | district/dbn), data = df)
 mod5 = lmer(mean.scale.score ~ charter_count + povertypercent + disabledpercent + ellpercent + asianpercent + blackpercent + hispanicpercent + new_charts + cohort +
-              (charter_count | district/dbn), data = df)
+              (1 | district/dbn), data = df)
 anova(mod3,mod4,mod5,refit=F)
 
 plot(density(residuals(mod5)))
@@ -66,27 +66,16 @@ qqline(residuals(mod5))
 # Add year
 ############################## 
 mod6 = lmer(mean.scale.score ~ charter_count + povertypercent + disabledpercent + ellpercent + asianpercent + blackpercent + hispanicpercent + new_charts + cohort + year +
-              (charter_count | district/dbn), data = df)
+              (1 | district/dbn), data = df)
+mod7 = lmer(mean.scale.score ~ charter_count + povertypercent + disabledpercent + ellpercent + asianpercent + blackpercent + hispanicpercent + new_charts + cohort + year +
+              (year | district/dbn), data = df)
 
-# Try nlme
-library(nlme)
-mod7 = lme(mean.scale.score ~ year, random=~year|district, data = df, correlation=corAR1())
 mod8 = lme(mean.scale.score ~ charter_count + povertypercent + disabledpercent + ellpercent + asianpercent + blackpercent + hispanicpercent + new_charts + cohort + year, 
-           random=~year+charter_count|district/dbn, 
-           data = df, 
-           correlation=corAR1())
-summary(mod7)
+           random=~year|district/dbn, 
+           data = df)
 summary(mod8)
-anova(mod8)
-# 
-# mod7 = lmer(mean.scale.score ~ year + (year | district), data = df)
-# mod8 = lmer(mean.scale.score ~ year + (year || district) + (0 + year | district:dbn), data = df)
-# summary(mod6)
-# summary(mod7)
+
+
 
 save(mod1,mod2,mod3,mod4,mod5,mod6,mod7,file='models.RDATA')
 
-#######
-# Questions: 
-# 1) missing data demographics
-# 2) convergence issues when including random slope for 'year'

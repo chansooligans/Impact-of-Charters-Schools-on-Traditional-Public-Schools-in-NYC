@@ -137,7 +137,9 @@ colnames(demographics_2)[19:38] = colnames_to_fix
 # Fix Year Column (If 2013-14, keep 2014)
 demographics_2$Year = as.integer(paste('20',substr(demographics_2$Year,6,7),sep=''))
 
+
 # Remove "Multiple Race Categories Not Represented" for consistency across Demographics Data files
+demographics_2$Total.Enrollment = as.integer(gsub(',','',demographics_2$Total.Enrollment))
 demographics_2$Total.Enrollment = demographics_2$Total.Enrollment - demographics_2$Multiple.Race.Categories.Not.Represented
 
 # Merge Demographics 
@@ -423,12 +425,13 @@ master = master %>%
 # Filter / Subset Dataset
 ##############################
 master = master %>% 
+  filter(GEOGRAPHICAL_DISTRICT_CODE != 0) %>%
   filter(Grade != 'All Grades') %>%
   mutate(year_sch = paste(DBN,Year,sep='_'))
 
 # Generate Year/Grade Column
 ##############################
-master$GradeYear = paste(master$Grade,master$Year,sep='_')
+master$GradeYear = paste(master$math,master$Grade,master$Year,sep='_')
 
 # Remove Missing Scores
 ##############################
