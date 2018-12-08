@@ -453,17 +453,16 @@ for(i in 1:length(grade_years)){
 temp = master %>%
   group_by(esid_no, Year) %>%
   dplyr::summarize(charter_count = uniqueN(DBN[charter == 1]),
-                   charter_share = uniqueN(DBN[charter == 1])/uniqueN(DBN))
+                   charter_share = uniqueN(DBN[charter == 1])/n_distinct(DBN))
 master = master %>% 
   left_join(temp, by=c('Year','esid_no'))
 
 # Charter Count (District)
 #########################
 temp = master %>%
-  filter(charter == 1) %>% 
   group_by(GEOGRAPHICAL_DISTRICT_CODE, Year) %>%
   dplyr::summarize(charter_count_district = uniqueN(DBN[charter == 1]),
-                   charter_share_district = uniqueN(DBN[charter == 1])/uniqueN(DBN))
+                   charter_share_district = uniqueN(DBN[charter == 1])/n_distinct(DBN))
 
 master = master %>% 
   left_join(temp, by=c('Year','GEOGRAPHICAL_DISTRICT_CODE'))
