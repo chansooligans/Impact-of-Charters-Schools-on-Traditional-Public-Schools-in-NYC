@@ -15,10 +15,13 @@ master = master[-missing_data,]
 
 df = master %>% 
   filter(math == 1,
-         grade <= 6,
+         grade < 6,
          charter == 0) 
 
 df$charter_count = (df$charter_count - mean(df$charter_count))/sd(df$charter_count)
+df$year = df$year - mean(df$year) 
+df$district = as.factor(df$district)
+df$esid_no = as.factor(df$esid_no)
 
 ##############################
 # Models
@@ -32,9 +35,9 @@ um.mod.vars$vcov[1] / sum(um.mod.vars$vcov) # ICC cohort
 um.mod.vars$vcov[2] / sum(um.mod.vars$vcov) # ICC zone
 um.mod.vars$vcov[3] / sum(um.mod.vars$vcov) # ICC district
 
-# 10.1% of variation is between cohorts 
-# 42.1% of variation is between zones
-# 36.2% of variation is between districts
+# 11.4% of variation is between cohorts 
+# 41.8% of variation is between zones
+# 36.5% of variation is between districts
 
 # Add Treatment Covariate + Random Slope
 ##############################
@@ -67,14 +70,10 @@ qqline(residuals(mod5))
 ############################## 
 mod6 = lmer(mean.scale.score ~ charter_count + povertypercent + disabledpercent + ellpercent + asianpercent + blackpercent + hispanicpercent + new_charts + cohort + year +
               (1 | district/dbn), data = df)
-mod7 = lmer(mean.scale.score ~ charter_count + povertypercent + disabledpercent + ellpercent + asianpercent + blackpercent + hispanicpercent + new_charts + cohort + year +
-              (year | district/dbn), data = df)
 
-mod8 = lme(mean.scale.score ~ charter_count + povertypercent + disabledpercent + ellpercent + asianpercent + blackpercent + hispanicpercent + new_charts + cohort + year, 
-           random=~year|district/dbn, 
-           data = df)
-summary(mod8)
-
+mod7 = lmer(mean.scale.score ~  charter_count + povertypercent + disabledpercent + ellpercent + asianpercent + blackpercent + hispanicpercent + new_charts + cohort + 
+              year + (year | district) + (year | dbn), data = df)
+summary(mod7)
 
 
 save(mod1,mod2,mod3,mod4,mod5,mod6,mod7,file='models.RDATA')
