@@ -27,30 +27,77 @@ rm(list=ls())
 master = read.csv('master.csv')
 master = master %>%
   filter(math == 1,
-         grade < 6)
+         grade <= 6)
 set.seed(1234)
 
+
+
 #########################
-# Plots
+# Plots -- District Averages
 #########################
+
 temp = master %>%
-  filter(district != 0) %>%
-  group_by(district, year, grade) %>%
+  group_by(district, year, grade, charter_share_district) %>%
   dplyr::summarise(y = mean(mean.scale.score))
 
-ggplot(data = temp, aes(x=year, y = y, group = district, colour = as.factor(district)), alpha = 0.8) +
+ggplot(data = temp, aes(x=year, y = y, group = district, colour = charter_share_district), alpha = 0.8) +
+  geom_line() + 
+  geom_point() +
+  scale_color_gradient(low="grey", high="red") +
+  ggtitle("Scores over time by grade") +    
+  labs(colour = '% charter \n in district') +
+  facet_wrap(~grade)
+
+ggplot(data = temp, aes(x=year, y = y, group = district, colour = charter_share_district), alpha = 0.8) +
+  geom_line() + 
+  geom_point() +
+  geom_smooth(method='lm',formula=y~x, color='blue', se=F) +
+  scale_color_gradient(low="grey", high="red") +
+  ggtitle("Scores over time by grade") +    
+  labs(colour = '% charter \n in district') +
+  facet_wrap(~grade)
+
+#########################
+# Plots -- School Averages
+#########################
+
+temp = master %>%
+  filter(district %in% c(1:30)) %>%
+  group_by(district, dbn, year, grade, charter_share) %>%
+  dplyr::summarise(y = mean(mean.scale.score))
+
+ggplot(data = temp, aes(x=year, y = y, group = dbn, colour = charter_share), alpha = 0.8) +
+  geom_line() + 
+  geom_point() +
+  scale_color_gradient(low="grey", high="red") +
+  ggtitle("Scores over time by grade") +    
+  labs(colour = '% charter \n in school zone') +
+  facet_wrap(~district)
+
+ggplot(data = temp, aes(x=year, y = y, group = dbn, colour = charter_share), alpha = 0.8) +
+  geom_line() + 
+  geom_point() +
+  geom_smooth(method='lm',formula=y~x, color = 'blue', se=F) +
+  scale_color_gradient(low="grey", high="red") +
+  ggtitle("Scores over time by grade") +    
+  labs(colour = '% charter \n in school zone') +
+  facet_wrap(~district)
+
+
+#########################
+# Plots -- School Averages
+#########################
+
+
+temp = master %>%
+  filter(dbn %in% unique(master$dbn)[1:30]) %>%
+  group_by(dbn, cohort, year, grade, charter_share) %>%
+  dplyr::summarise(y = mean(mean.scale.score))
+
+ggplot(data = temp, aes(x=year, y = y, group = cohort, color = as.factor(cohort)), alpha = 0.8) +
   geom_line() + 
   geom_point() +
   ggtitle("Scores over time by grade") +    
-  labs(colour = '% charter \n in district') +
-  facet_wrap(~grade)
-
-
-temp = master%>%
-  filter(district < 4)
-ggplot(data = temp, aes(x=year, y = mean.scale.score), alpha = 0.8) +
-  geom_point() +
-  ggtitle("Scores over time by grade") +    
-  labs(colour = '% charter \n in district') +
-  facet_wrap(~grade)
+  labs(colour = '% charter \n in school zone') +
+  facet_wrap(~dbn)
 

@@ -15,7 +15,7 @@ master = master[-missing_data,]
 
 df = master %>% 
   filter(math == 1,
-         grade < 6,
+         grade <= 6,
          charter == 0) 
 
 df$charter_count = (df$charter_count - mean(df$charter_count))/sd(df$charter_count)
@@ -32,9 +32,9 @@ um.mod.vars$vcov[1] / sum(um.mod.vars$vcov) # ICC cohort
 um.mod.vars$vcov[2] / sum(um.mod.vars$vcov) # ICC zone
 um.mod.vars$vcov[3] / sum(um.mod.vars$vcov) # ICC district
 
-# 20.6% of variation is between cohorts 
-# 36.7% of variation is between zones
-# 32.3% of variation is between districts
+# 10.1% of variation is between cohorts 
+# 42.1% of variation is between zones
+# 36.2% of variation is between districts
 
 # Add Treatment Covariate + Random Slope
 ##############################
