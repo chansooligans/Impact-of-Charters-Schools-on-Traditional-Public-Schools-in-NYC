@@ -1,4 +1,4 @@
-# Charter School Project
+# Impact of Charters Schools on Traditional Public Schools in NYC 
 
 Supervised by Professor Ying Lu (NYU)
 
