@@ -23,6 +23,7 @@ df$year = df$year - mean(df$year)
 df$district = as.factor(df$district)
 df$esid_no = as.factor(df$esid_no)
 
+
 ##############################
 # Models
 ##############################
@@ -68,13 +69,45 @@ qqline(residuals(mod5))
 
 # Add year
 ############################## 
-mod6 = lmer(mean.scale.score ~ charter_count + povertypercent + disabledpercent + ellpercent + asianpercent + blackpercent + hispanicpercent + new_charts + cohort + year +
-              (1 | district/dbn), data = df)
+fixed = c('mean.scale.score ~  charter_count + new_charts + 
+              povertypercent + disabledpercent + ellpercent + asianpercent + blackpercent + hispanicpercent + 
+          cohort + year')
 
-mod7 = lmer(mean.scale.score ~  charter_count + povertypercent + disabledpercent + ellpercent + asianpercent + blackpercent + hispanicpercent + new_charts + cohort + 
-              year + (year | district) + (year | dbn), data = df)
+# Random intercepts for school and district
+mod6 = lmer(formula(paste(fixed, ' + (1 | district/dbn)')), 
+            data = df)
+
+# + Random slopes for year:
+
+# Varying at school level (uncorrelated)
+mod7 = lmer(formula(paste(fixed, ' + (1 | district/dbn) + (0+year|district:dbn)')), 
+            data = df) 
+
+# Varying at district level  (uncorrelated)
+mod8 = lmer(formula(paste(fixed, ' + (1 | district/dbn) + (0+year | district)')), 
+            data = df) 
+
+# Varying at both (uncorrelated)
+mod9 = lmer(formula(paste(fixed, ' + (1 | district/dbn) + (0 + year | district) + (0 + year | dbn)')), 
+            data = df) 
+
+# Varying at both (correlated for school)
+mod10 = lmer(formula(paste(fixed, ' + (1 | district) + (0 + year | district) + (year | district:dbn)')), 
+             data = df) 
+
+# Varying at both (correlated for district)
+mod11 = lmer(formula(paste(fixed, ' + (1 | district) + (year | district) + (0 + year | district:dbn)')), 
+             data = df) 
+
+# Varying at both (correlated for both)
+mod12 = lmer(formula(paste(fixed, ' + (1 | district) + (year | district) + (year | district:dbn)')), 
+             data = df) 
+
+anova(mod6,mod7,mod8,mod9,mod10,mod11,mod12,refit=F)
 summary(mod7)
 
 
-save(mod1,mod2,mod3,mod4,mod5,mod6,mod7,file='models.RDATA')
+
+
+# save(mod1,mod2,mod3,mod4,mod5,mod6,mod7,file='models.RDATA')
 

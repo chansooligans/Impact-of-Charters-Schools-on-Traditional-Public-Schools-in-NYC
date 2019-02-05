@@ -19,7 +19,8 @@ locations_slug = 'data/locations'
 ########################################################################################################################
 
 
-# NYC TEST SCORES FROM OPEN DATA
+# NYC TEST SCORES FROM NY OPEN DATA
+# https://opendata.cityofnewyork.us/
 ##############################
 
 # NYC Open Data 2006-2013
@@ -34,7 +35,8 @@ nyc_open13 = list()
 nyc_open13 = lapply(paste(nyc_open13_slug,files_nyc_open13,sep='/'),read.csv, stringsAsFactors = F)
 names(nyc_open13) = files_nyc_open13
 
-# NYC TEST SCORES FROM NYC DOE (2013-2018)
+# NYC TEST SCORES FROM NYC DOE WEBSITE (2013-2018)
+# https://infohub.nyced.org/reports-and-policies/citywide-information-and-data/test-results
 ##############################
 
 # NYC DOE Data: Charter Math 2013-2018
@@ -87,6 +89,7 @@ locations = lapply(locations, function(x) x[,loc_cols_to_keep])
 locations = rbind.fill(locations)
 # Fix DBN Column
 locations$ATS.SYSTEM.CODE = trimws(locations$ATS.SYSTEM.CODE)
+
 
 # Demographics 2006-2012 (NYC OPEN DATA)
 ##############################
@@ -414,8 +417,8 @@ diversity = cbind(diversity[,c('GEOGRAPHICAL_DISTRICT_CODE','Year')],shannon_cd)
 master = master %>% 
   left_join(diversity, by = c('GEOGRAPHICAL_DISTRICT_CODE', 'Year'))
 
-
-
+master_raw=master
+save(master_raw,file='data/raw_merged_master.RDATA')
 
 
 ########################################################################################################################
