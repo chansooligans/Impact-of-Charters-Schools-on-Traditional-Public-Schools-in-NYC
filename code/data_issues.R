@@ -75,6 +75,10 @@ temp = charters_copy - charters_lag
 temp = temp[1:13,]
 temp
 
+check = master %>%
+  group_by(district) %>%
+  dplyr::summarise(n=n_distinct(dbn))
+
 # 
 
 
@@ -117,17 +121,22 @@ hist(check$charts_to_studs_ratio, breaks = 8)
 # 27 = Ozone Park
 # 24 = Corona
 
-master$high = NA
+master$high = 'med'
 master$high[master$district %in% c(20,25,26)] = 'no_charters'
 master$high[master$district %in% c(10,31,27,24)] = 'low'
-master$high[master$district %in% c(7,16,13,5)] = 'yes'
+master$high[master$district %in% c(7,16,13,5)] = 'high'
 
 colnames(master)
 
+
 # Demographic Composition of Traditional Public Schools by High vs Low Charter:Student Ratio
+#########################
 # 4th Grade, in year 2018
+
+# Demographics of TPS in 2018, grouped by high vs low vs medium charter:student ratio
 master %>%
   filter(math==1,grade==4,year==2018,charter==F) %>%
+  filter(!is.na(total.enrollment)) %>%
   group_by(high) %>%
   dplyr::summarize(asian = sum(asian)/sum(total.enrollment),
                    black = sum(black)/sum(total.enrollment),
@@ -137,8 +146,23 @@ master %>%
                    ell = mean(ell),
                    disabled = mean(disabled))
 
+# Demographics of TPS in *2008*, grouped by high vs low vs medium charter:student ratio (where ratio computed in *2018*)
+master %>%
+  filter(math==1,grade==4,year==2008,charter==F) %>%
+  filter(!is.na(total.enrollment)) %>%
+  group_by(high) %>%
+  dplyr::summarize(asian = sum(asian)/sum(total.enrollment),
+                   black = sum(black)/sum(total.enrollment),
+                   hispanic = sum(hispanic)/sum(total.enrollment),
+                   white = sum(white)/sum(total.enrollment),
+                   poverty_percent = mean(povertypercent),
+                   ell = mean(ell),
+                   disabled = mean(disabled))
+
+
 # Demographic Composition of Charter vs Traditional
 # 4th Grade, in year 2018
+#########################
 master %>%
   filter(math==1,grade==4,year==2018) %>%
   group_by(charter) %>%
@@ -149,6 +173,20 @@ master %>%
                    poverty_percent = mean(povertypercent),
                    ell = mean(ell),
                    disabled = mean(disabled))
+
+# TPS Scores, grouped by high/low/medium charter:student ratio
+#########################
+
+sum(is.na(master$mean.scale.score))
+
+master %>%
+  filter(math==1,grade==4,year==2018,charter==F) %>%
+  filter(!is.na(mean.scale.score)) %>%
+  group_by(high) %>%
+  dplyr::summarize(mu = mean(mean.scale.score))
+colnames(master)
+
+
 
 ##################################################
 # Distribution of Demographics

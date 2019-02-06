@@ -53,9 +53,9 @@ The purpose of this study is to evaluate the impact of charter schools on tradit
 
 ## Literature Review
 
-### Effects of Charter Schools on Student Outcomes:
+#### Effects of Charter Schools on Student Outcomes:
 
-#### Fixed Effects:
+Fixed Effects:
 1. Cordes (2018): In pursuit of the common good: The spillover effects of charter schools on public school students in New York City
 2. Ni (2008): The impact of charter schools on the efficiency of traditional public schools: Evidence from Michigan
 3. Cremata and Raymond (2014)
@@ -64,7 +64,7 @@ The purpose of this study is to evaluate the impact of charter schools on tradit
 6. Booker, Gilpatric, Gronberg & Jansen (2005): The effect of charter schools on traditional public schools
 7. Buddin & Zimmer (2005): Is charter school competition in California improving the performance of traditional public schools?
 
-#### Instrumental Variables:
+Instrumental Variables:
 1. Imberman (2011): The effect of charter schools on achievement and behavior of public school students
 2. Bettinger (2005): The effect of charter schools on charter students and public schools
 3. Terrier & Ridley (2018): Fiscal and Education Spillovers from Charter Expansion
