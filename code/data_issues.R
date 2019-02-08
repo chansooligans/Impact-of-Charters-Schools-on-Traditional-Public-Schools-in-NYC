@@ -1,6 +1,7 @@
 library(ggplot2)
 library(dplyr)
 library(reshape2)
+rm(list=ls())
 setwd('/Users/Chansoo/Desktop/Charter_School_Project/')
 load(file='data/raw_merged_master.RDATA')
 master = read.csv('data/master.csv',stringsAsFactors = F)
@@ -174,17 +175,22 @@ master %>%
                    ell = mean(ell),
                    disabled = mean(disabled))
 
+
 # TPS Scores, grouped by high/low/medium charter:student ratio
 #########################
 
-sum(is.na(master$mean.scale.score))
 
 master %>%
   filter(math==1,grade==4,year==2018,charter==F) %>%
   filter(!is.na(mean.scale.score)) %>%
   group_by(high) %>%
   dplyr::summarize(mu = mean(mean.scale.score))
-colnames(master)
+
+master %>%
+  filter(math==1,grade==4,year==2008,charter==F) %>%
+  filter(!is.na(mean.scale.score)) %>%
+  group_by(high) %>%
+  dplyr::summarize(mu = mean(mean.scale.score))
 
 
 

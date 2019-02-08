@@ -2,7 +2,7 @@
 
 Supervised by Professor Ying Lu (NYU)
 
-Start Date: 9/12/2018
+Start Date: 9/12/2018  
 Updated: 2/5/2019
 
 ## Introduction:
@@ -87,7 +87,7 @@ Instrumental Variables:
 
 #### Models of Charter School Location:
 1. Bifulco and Buerger (2015): School choice, racial segregation, and test-score gaps: Evidence from North Carolina’s harter school program
-2. Henig and macdDonald (2002): Locational decisions of charter schools: Probing the market metaphor
+2. Henig and MacDonald (2002): Locational decisions of charter schools: Probing the market metaphor
 3. Glomm, Harris, and Lo (2005): Charter school location
 4. Stoddard and Corcoran (2007): The political economy of school choice: Support for charter schools across states and school districts
 5. Ferreyra and Kosenok (2014): Charter school entry and school choice: The case of Washington, DC. 
